@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAP & AI&D Innovation Hub — Enterprise Intelligence Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg0:#ffffff;--bg1:#f7f9fc;--bg2:#f0f4f9;--bg3:#e8eef6;
+  --c1:#0057b8;--c2:#5b21b6;--c3:#dc2626;--c4:#059669;--c5:#d97706;
+  --c1l:#e8f0fb;--c2l:#ede9fe;--c3l:#fee2e2;--c4l:#d1fae5;--c5l:#fef3c7;
+  --t1:#0f1929;--t2:#374151;--t3:#6b7280;--t4:#d1d5db;
+  --bd:rgba(0,0,0,0.09);--bd2:rgba(0,87,184,0.3);
+  --sh:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --sh2:0 4px 16px rgba(0,0,0,0.08),0 2px 6px rgba(0,0,0,0.04);
+  --sh3:0 8px 32px rgba(0,0,0,0.1),0 4px 12px rgba(0,0,0,0.05);
+  --ff:'Playfair Display',Georgia,serif;
+  --fb:'Source Sans 3',system-ui,sans-serif;
+  --fm:'IBM Plex Mono',monospace;
+  --r8:8px;--r12:12px;--r16:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--bg0);color:var(--t1);overflow-x:hidden;line-height:1.65;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:#f1f5f9;}::-webkit-scrollbar-thumb{background:var(--c1);border-radius:3px;}
+nav{position:fixed;top:0;left:0;right:0;height:60px;background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);z-index:999;display:flex;align-items:center;padding:0 28px;box-shadow:var(--sh);}
+.nlogo{display:flex;align-items:center;gap:10px;cursor:pointer;margin-right:20px;flex-shrink:0;}
+.nlogo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--c1),var(--c2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--fb);font-weight:700;font-size:9px;color:#fff;text-align:center;line-height:1.2;}
+.nlogo-name{font-family:var(--fb);font-size:13px;font-weight:700;color:var(--t1);line-height:1.2;}
+.nlogo-tag{font-size:9.5px;color:var(--t3);letter-spacing:.8px;text-transform:uppercase;}
+.nlinks{display:flex;align-items:center;gap:2px;flex:1;overflow-x:auto;}
+.nlinks::-webkit-scrollbar{display:none;}
+.nl{padding:5px 11px;font-size:12px;font-weight:600;color:var(--t3);cursor:pointer;border-radius:6px;border:1px solid transparent;white-space:nowrap;transition:all .18s;font-family:var(--fb);}
+.nl:hover,.nl.on{color:var(--c1);background:var(--c1l);border-color:rgba(0,87,184,.2);}
+.nl.cta{background:var(--c1);color:#fff;margin-left:8px;padding:6px 16px;}
+.nl.cta:hover{background:#0047a0;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,87,184,.3);}
+.pg{display:none;min-height:100vh;padding-top:60px;animation:fadeUp .4s ease;}
+.pg.on{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.hero{position:relative;min-height:calc(100vh - 60px);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:60px 40px 0;background:linear-gradient(175deg,#f7f9fc 0%,#eef3fb 50%,#f7f9fc 100%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,87,184,.04)1px,transparent 1px),linear-gradient(90deg,rgba(0,87,184,.04)1px,transparent 1px);background-size:52px 52px;}
+.hero-orb{position:absolute;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(0,87,184,.06) 0%,rgba(91,33,182,.04) 40%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-52%);animation:orbPulse 6s ease-in-out infinite;}
+@keyframes orbPulse{0%,100%{transform:translate(-50%,-52%)scale(1);}50%{transform:translate(-50%,-52%)scale(1.06);}}
+.hero-inner{position:relative;z-index:1;text-align:center;max-width:860px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,87,184,.08);border:1px solid rgba(0,87,184,.2);padding:5px 18px;border-radius:20px;font-size:10.5px;font-weight:600;color:var(--c1);letter-spacing:1.8px;text-transform:uppercase;margin-bottom:28px;font-family:var(--fm);}
+.hero-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--c1);animation:blink 2.2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.hero-h1{font-family:var(--ff);font-size:clamp(28px,4.5vw,60px);font-weight:700;line-height:1.1;letter-spacing:-.3px;margin-bottom:6px;color:var(--t1);}
+.hero-h1 .cy{color:var(--c1);}
+.hero-h1 .pu{color:var(--c2);}
+.hero-arrow{font-size:22px;color:var(--c1);display:inline-block;margin:0 8px;animation:arrowBounce 1.8s ease-in-out infinite;}
+@keyframes arrowBounce{0%,100%{transform:translateX(0);}50%{transform:translateX(7px);}}
+.hero-sub{font-size:16px;color:var(--t2);max-width:600px;margin:20px auto;line-height:1.8;}
+.hero-sub strong{color:var(--t1);font-weight:600;}
+.hero-pills{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:22px 0;}
+.hpill{display:flex;align-items:center;gap:6px;padding:5px 14px;background:#fff;border:1px solid var(--bd);border-radius:7px;font-size:12px;color:var(--t2);font-weight:500;box-shadow:var(--sh);}
+.hpill .dot{width:5px;height:5px;border-radius:50%;}
+.hero-btns{display:flex;justify-content:center;gap:12px;margin-top:30px;}
+.btn-p{padding:11px 28px;background:var(--c1);color:#fff;font-size:13.5px;font-weight:600;border-radius:8px;cursor:pointer;border:none;font-family:var(--fb);transition:all .18s;box-shadow:0 2px 8px rgba(0,87,184,.25);}
+.btn-p:hover{background:#0047a0;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,87,184,.3);}
+.btn-s{padding:11px 28px;background:#fff;color:var(--t1);font-size:13.5px;font-weight:600;border-radius:8px;cursor:pointer;border:1px solid var(--bd);font-family:var(--fb);transition:all .18s;box-shadow:var(--sh);}
+.btn-s:hover{border-color:var(--c1);color:var(--c1);box-shadow:var(--sh2);}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);margin-top:60px;border-top:1px solid var(--bd);background:#fff;}
+.si{padding:26px;text-align:center;border-right:1px solid var(--bd);}
+.si:last-child{border-right:none;}
+.si-n{font-family:var(--ff);font-size:36px;font-weight:700;color:var(--c1);letter-spacing:-.5px;line-height:1;}
+.si-l{font-size:11px;color:var(--t3);margin-top:5px;text-transform:uppercase;letter-spacing:.7px;}
+.nav6{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:56px 40px;}
+.nb{background:#fff;border:1px solid var(--bd);padding:28px 24px 36px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;border-radius:var(--r12);box-shadow:var(--sh);}
+.nb-accent{position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r12) var(--r12) 0 0;}
+.nb::after{content:'→';position:absolute;bottom:16px;right:18px;font-size:15px;color:var(--t4);transition:all .2s;}
+.nb:hover{transform:translateY(-3px);box-shadow:var(--sh3);}
+.nb:hover::after{color:var(--c1);transform:translateX(4px);}
+.nb-num{font-family:var(--fm);font-size:10px;color:var(--t4);margin-bottom:10px;}
+.nb-ico{font-size:26px;margin-bottom:10px;}
+.nb-t{font-size:15px;font-weight:700;color:var(--t1);margin-bottom:7px;line-height:1.3;}
+.nb-d{font-size:12.5px;color:var(--t3);line-height:1.6;}
+.wrap{max-width:1180px;margin:0 auto;padding:64px 40px;}
+.sh{margin-bottom:40px;}
+.sh-eye{font-family:var(--fm);font-size:10.5px;font-weight:600;color:var(--c1);text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;}
+.sh-h{font-family:var(--ff);font-size:clamp(22px,3vw,38px);font-weight:700;letter-spacing:-.3px;line-height:1.15;color:var(--t1);}
+.sh-h .cy{color:var(--c1);}
+.sh-h .pu{color:var(--c2);}
+.sh-s{font-size:15.5px;color:var(--t2);margin-top:10px;max-width:580px;line-height:1.75;}
+.sh-line{width:40px;height:3px;background:linear-gradient(90deg,var(--c1),var(--c2));margin-top:14px;border-radius:2px;}
+.card{background:#fff;border:1px solid var(--bd);border-radius:var(--r12);padding:22px;transition:all .25s;box-shadow:var(--sh);}
+.card:hover{border-color:rgba(0,87,184,.2);box-shadow:var(--sh2);transform:translateY(-2px);}
+.layers{max-width:680px;margin:28px auto;}
+.layer{display:flex;align-items:center;gap:18px;padding:18px 22px;border-radius:10px;margin-bottom:8px;position:relative;border:1px solid var(--bd);background:#fff;box-shadow:var(--sh);}
+.layer::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:10px 0 0 10px;}
+.ly-ey::before{background:var(--c1);}
+.ly-pl::before{background:var(--c2);}
+.ly-sap::before{background:var(--c4);}
+.layer-ico{font-size:22px;flex-shrink:0;}
+.layer-txt .lt{font-size:14px;font-weight:700;margin-bottom:3px;color:var(--t1);}
+.layer-txt .ls{font-size:12px;color:var(--t3);}
+.layer-badge{margin-left:auto;font-size:10px;font-weight:600;padding:3px 10px;border-radius:10px;white-space:nowrap;flex-shrink:0;font-family:var(--fm);}
+.lb-ey{background:var(--c1l);color:var(--c1);border:1px solid rgba(0,87,184,.2);}
+.lb-pl{background:var(--c2l);color:var(--c2);border:1px solid rgba(91,33,182,.2);}
+.lb-sap{background:var(--c4l);color:var(--c4);border:1px solid rgba(5,150,105,.2);}
+.alli-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:28px 0;}
+.alli-card{background:#fff;border:1px solid var(--bd);border-radius:var(--r12);padding:24px;transition:all .25s;box-shadow:var(--sh);}
+.alli-card:hover{transform:translateY(-2px);box-shadow:var(--sh2);}
+.alli-logo{font-family:var(--ff);font-size:18px;font-weight:700;margin-bottom:6px;}
+.alli-pitch{font-size:12px;color:var(--t3);font-style:italic;margin-bottom:14px;line-height:1.5;}
+.alli-b{font-size:12px;color:var(--t2);padding:4px 0;display:flex;align-items:flex-start;gap:8px;line-height:1.45;}
+.alli-b::before{content:'▸';color:var(--c1);font-size:9px;margin-top:3px;flex-shrink:0;}
+.mkt-row{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid var(--bd);font-size:13.5px;color:var(--t2);}
+.mkt-row:last-child{border-bottom:none;font-weight:700;background:var(--c4l);}
+.mkt-amt{font-family:var(--fm);font-weight:600;color:var(--c4);}
+.rm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0;}
+.rm-card{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:18px;box-shadow:var(--sh);}
+.rm-q{font-family:var(--fm);font-size:10px;color:var(--c1);font-weight:600;letter-spacing:1px;margin-bottom:10px;}
+.rm-item{font-size:12px;color:var(--t2);padding:4px 0;display:flex;gap:8px;line-height:1.45;}
+.rm-item::before{content:'○';color:var(--c1);font-size:9px;margin-top:2px;flex-shrink:0;}
+.ctabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;margin-bottom:28px;}
+.ctabs::-webkit-scrollbar{display:none;}
+.ct{padding:8px 16px;border-radius:8px;border:1px solid var(--bd);background:#fff;font-size:12.5px;font-weight:600;color:var(--t3);cursor:pointer;white-space:nowrap;transition:all .18s;display:flex;align-items:center;gap:6px;box-shadow:var(--sh);}
+.ct:hover{border-color:var(--c1);color:var(--c1);}
+.ct.on{background:var(--c1l);border-color:rgba(0,87,184,.35);color:var(--c1);}
+.cpanel{display:none;}
+.cpanel.on{display:block;}
+.cxo-banner{display:flex;align-items:center;gap:18px;padding:20px 24px;background:#fff;border:1px solid var(--bd);border-radius:var(--r12);margin-bottom:20px;box-shadow:var(--sh);}
+.cxo-ico{width:52px;height:52px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.cxo-tt{font-family:var(--ff);font-size:20px;font-weight:700;color:var(--t1);}
+.cxo-sub{font-size:12px;color:var(--t3);margin-top:3px;}
+.vstmt{background:var(--c1l);border:1px solid rgba(0,87,184,.15);border-radius:10px;padding:20px 24px;margin-bottom:22px;border-left:4px solid var(--c1);}
+.vstmt-lbl{font-family:var(--fm);font-size:9.5px;font-weight:600;color:var(--c1);text-transform:uppercase;letter-spacing:2px;margin-bottom:7px;}
+.vstmt-txt{font-size:14.5px;font-style:italic;color:var(--t1);line-height:1.75;font-family:var(--ff);}
+.out5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:20px 0;}
+.oc{background:#fff;border:1px solid var(--bd);border-radius:9px;padding:14px;text-align:center;position:relative;box-shadow:var(--sh);}
+.oc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--oc-col,var(--c1));border-radius:0 0 9px 9px;}
+.oc-n{font-family:var(--fm);font-size:9.5px;color:var(--t4);margin-bottom:6px;}
+.oc-t{font-size:12.5px;font-weight:700;color:var(--t1);margin-bottom:4px;line-height:1.3;}
+.oc-d{font-size:11px;color:var(--t3);line-height:1.5;}
+.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;}
+.cap-card{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:16px;transition:all .25s;cursor:pointer;box-shadow:var(--sh);}
+.cap-card:hover{border-color:rgba(0,87,184,.25);box-shadow:var(--sh2);transform:translateY(-2px);}
+.cap-type{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px;display:inline-block;margin-bottom:8px;font-family:var(--fm);}
+.t-agent{background:#fef3c7;color:#92400e;border:1px solid #fde68a;}
+.t-model{background:var(--c1l);color:var(--c1);border:1px solid rgba(0,87,184,.2);}
+.t-intel{background:var(--c2l);color:var(--c2);border:1px solid rgba(91,33,182,.2);}
+.cap-name{font-size:13.5px;font-weight:700;color:var(--t1);margin-bottom:6px;line-height:1.35;}
+.cap-pitch{font-size:12px;color:var(--t2);line-height:1.55;}
+.cap-tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;}
+.ctag{font-size:9.5px;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.3px;font-family:var(--fm);}
+.tr{background:#d1fae5;color:#065f46;border:1px solid #a7f3d0;}
+.tc{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;}
+.trk{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;}
+.tsc{background:var(--c2l);color:var(--c2);border:1px solid rgba(91,33,182,.25);}
+.tbl{background:var(--c1l);color:var(--c1);border:1px solid rgba(0,87,184,.2);}
+.ttl{background:#fce7f3;color:#9d174d;border:1px solid #f9a8d4;}
+.tmr{background:#fef3c7;color:#92400e;border:1px solid #fde68a;}
+.oflow{display:flex;align-items:flex-start;overflow-x:auto;padding:20px 0;margin:20px 0;}
+.oflow::-webkit-scrollbar{display:none;}
+.ofstep{flex:1;min-width:115px;text-align:center;padding:0 5px;position:relative;}
+.ofstep::after{content:'→';position:absolute;right:-10px;top:18px;font-size:16px;color:var(--c1);font-weight:700;}
+.ofstep:last-child::after{display:none;}
+.of-node{width:48px;height:48px;border-radius:50%;background:#fff;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 10px;transition:all .25s;box-shadow:var(--sh);}
+.of-node:hover{border-color:var(--c1);box-shadow:0 0 0 4px var(--c1l);}
+.of-n{font-family:var(--fm);font-size:9px;color:var(--t4);margin-bottom:3px;}
+.of-t{font-size:11.5px;font-weight:600;color:var(--t2);}
+.pods{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0;}
+.pod{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:18px;box-shadow:var(--sh);}
+.pod-t{font-size:13px;font-weight:700;color:var(--c1);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--bd);}
+.pod-r{font-size:12px;color:var(--t2);padding:4px 0;display:flex;gap:8px;align-items:flex-start;line-height:1.4;}
+.pod-r::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--c1);flex-shrink:0;margin-top:6px;}
+.cat-sh{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--bg2);border:1px solid var(--bd);border-radius:9px;margin:28px 0 14px;border-left:4px solid var(--c1);}
+.cat-sh-ico{font-size:22px;}
+.cat-sh-t{font-size:15px;font-weight:700;color:var(--t1);}
+.cat-sh-s{font-size:11.5px;color:var(--t3);}
+.assets{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.ac{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:18px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;box-shadow:var(--sh);}
+.ac::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gc,var(--c1));opacity:0;transition:opacity .25s;}
+.ac:hover{transform:translateY(-3px);border-color:rgba(0,87,184,.25);box-shadow:var(--sh2);}
+.ac:hover::before{opacity:1;}
+.ac-name{font-size:13.5px;font-weight:700;color:var(--t1);margin-bottom:5px;line-height:1.35;}
+.ac-desc{font-size:11.5px;color:var(--t2);line-height:1.55;margin-bottom:8px;}
+.ac-tags{display:flex;flex-wrap:wrap;gap:3px;}
+.ac-ext{font-size:9.5px;color:var(--t4);margin-top:7px;font-family:var(--fm);}
+.has-link .ac-name{color:var(--c1);}
+.has-link .ac-ext{color:var(--c4);font-weight:600;}
+.ac-type{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;text-transform:uppercase;margin-bottom:8px;display:inline-block;font-family:var(--fm);}
+.ss-card{background:#fff;border:1px solid var(--bd);border-radius:var(--r16);padding:30px;margin-bottom:24px;box-shadow:var(--sh);}
+.ss-h{font-family:var(--ff);font-size:21px;font-weight:700;color:var(--t1);margin-bottom:4px;}
+.ss-sub{font-size:12.5px;color:var(--t3);margin-bottom:18px;}
+.journey{display:flex;align-items:center;margin:20px 0;overflow-x:auto;}
+.journey::-webkit-scrollbar{display:none;}
+.jstep{flex:1;min-width:108px;text-align:center;}
+.jcon{flex:0 0 24px;height:2px;background:var(--bd);}
+.jcon.done{background:var(--c4);}
+.jcon.rdy{background:var(--c1);}
+.jbox{padding:10px 6px;border-radius:8px;border:1px solid var(--bd);font-size:10.5px;font-weight:600;color:var(--t3);line-height:1.35;background:#fff;}
+.jbox.done{background:var(--c4l);border-color:rgba(5,150,105,.35);color:var(--c4);}
+.jbox.rdy{background:var(--c1l);border-color:rgba(0,87,184,.35);color:var(--c1);animation:rdyPulse 2.5s infinite;}
+.jbox.pend{opacity:.35;}
+@keyframes rdyPulse{0%,100%{box-shadow:none;}50%{box-shadow:0 0 12px rgba(0,87,184,.25);}}
+.jbox .ck{font-size:14px;display:block;margin-bottom:2px;}
+.logos-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0;}
+.clogo{padding:10px 16px;background:var(--bg2);border:1px solid var(--bd);border-radius:7px;font-size:12.5px;font-weight:700;color:var(--t1);box-shadow:var(--sh);}
+.clogo.ey-green{border-color:rgba(5,150,105,.35);color:var(--c4);background:var(--c4l);}
+.badge-fund{display:inline-flex;align-items:center;gap:7px;background:var(--c4l);border:1px solid rgba(5,150,105,.3);padding:6px 14px;border-radius:7px;font-size:12.5px;font-weight:700;color:var(--c4);margin:8px 0;}
+.badge-sapph{display:inline-flex;align-items:center;gap:7px;background:var(--c1l);border:1px solid rgba(0,87,184,.25);padding:6px 14px;border-radius:7px;font-size:12px;font-weight:700;color:var(--c1);margin:8px 0;}
+.vd-flow{display:flex;align-items:center;gap:8px;margin:24px 0;padding:22px;background:#fff;border:1px solid var(--bd);border-radius:var(--r12);overflow-x:auto;box-shadow:var(--sh);}
+.vd-flow::-webkit-scrollbar{display:none;}
+.vd-node{text-align:center;flex:1;min-width:95px;}
+.vd-ico{width:50px;height:50px;border-radius:10px;background:var(--c1l);border:1px solid rgba(0,87,184,.2);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 8px;}
+.vd-lbl{font-size:11.5px;font-weight:700;color:var(--t1);}
+.vd-sub{font-size:9.5px;color:var(--t3);}
+.vd-arr{color:var(--c1);font-size:20px;flex-shrink:0;}
+.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:20px 0;}
+.pc{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:20px;box-shadow:var(--sh);}
+.pc-t{font-size:14.5px;font-weight:700;margin-bottom:4px;color:var(--t1);}
+.pc-s{font-size:11px;color:var(--t3);margin-bottom:12px;}
+.pc-m{font-size:12px;color:var(--t2);padding:6px 10px;background:var(--bg1);border-radius:5px;border-left:3px solid var(--c1);margin-bottom:5px;line-height:1.4;}
+.gantt-wrap{margin:20px 0;background:#fff;border:1px solid var(--bd);border-radius:var(--r12);padding:20px;box-shadow:var(--sh);}
+.gantt-hdr{display:flex;gap:14px;margin-bottom:8px;}
+.gantt-hdr-lbl{width:190px;flex-shrink:0;}
+.gantt-weeks{display:grid;grid-template-columns:repeat(7,1fr);flex:1;gap:3px;}
+.gw-lbl{font-family:var(--fm);font-size:10px;color:var(--t3);text-align:center;}
+.gantt-row{display:flex;align-items:center;gap:14px;margin-bottom:5px;}
+.gantt-lbl{width:190px;flex-shrink:0;font-size:12px;color:var(--t2);}
+.gantt-bars{display:grid;grid-template-columns:repeat(7,1fr);flex:1;gap:3px;}
+.gb{height:20px;border-radius:4px;background:var(--bg3);}
+.gb.on{background:linear-gradient(90deg,var(--c1),var(--c2));opacity:.8;}
+.div{height:1px;background:var(--bd);margin:44px 0;}
+.modal-wrap{display:none;position:fixed;inset:0;background:rgba(15,25,41,0.5);backdrop-filter:blur(6px);z-index:2000;align-items:center;justify-content:center;}
+.modal-wrap.on{display:flex;}
+.modal{background:#fff;border:1px solid var(--bd);border-radius:var(--r16);padding:36px;max-width:460px;width:90%;text-align:center;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.15);}
+.modal-x{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--t3);font-size:20px;cursor:pointer;transition:color .18s;}
+.modal-x:hover{color:var(--t1);}
+.modal-badge{display:inline-flex;align-items:center;gap:7px;background:var(--c2l);border:1px solid rgba(91,33,182,.2);padding:5px 12px;border-radius:14px;font-size:10px;font-weight:700;color:var(--c2);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;font-family:var(--fm);}
+.modal-ico{font-size:44px;margin:10px 0;}
+.modal-t{font-family:var(--ff);font-size:20px;font-weight:700;margin-bottom:10px;color:var(--t1);}
+.modal-d{font-size:13px;color:var(--t2);line-height:1.75;}
+.fund-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0;}
+.fp{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:20px;box-shadow:var(--sh);}
+.fp-ph{font-family:var(--fm);font-size:10px;color:var(--c1);font-weight:600;margin-bottom:7px;letter-spacing:1px;}
+.fp-t{font-size:14.5px;font-weight:700;margin-bottom:10px;color:var(--t1);}
+.fp-b{font-size:12px;color:var(--t2);padding:3px 0;display:flex;gap:8px;line-height:1.45;}
+.fp-b::before{content:'▸';color:var(--c1);font-size:9px;margin-top:3px;flex-shrink:0;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.cy{color:var(--c1);}.pu{color:var(--c2);}
+.pitch-quote{font-family:var(--ff);font-size:clamp(16px,2vw,22px);font-style:italic;font-weight:600;color:var(--t2);line-height:1.6;}
+@media(max-width:1000px){.out5{grid-template-columns:repeat(3,1fr);}.cap-grid{grid-template-columns:1fr 1fr;}.assets{grid-template-columns:1fr 1fr;}.alli-grid,.g3,.fund-grid{grid-template-columns:1fr;}.rm-grid{grid-template-columns:1fr 1fr;}.pods{grid-template-columns:1fr 1fr;}.nav6{grid-template-columns:1fr 1fr;}}
+@media(max-width:700px){.stats-bar{grid-template-columns:1fr 1fr;}.cap-grid,.assets{grid-template-columns:1fr;}.out5{grid-template-columns:1fr 1fr;}.g2,.process-grid{grid-template-columns:1fr;}.wrap{padding:40px 20px;}.nav6{gap:10px;margin:40px 20px;}}
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+  <div class="nlogo" onclick="showPage('home')">
+    <div class="nlogo-mark">AI&D<br>HUB</div>
+    <div>
+      <div class="nlogo-name">SAP &amp; AI&D Innovation Hub</div>
+      <div class="nlogo-tag">Enterprise Intelligence Platform</div>
+    </div>
+  </div>
+  <div class="nlinks">
+    <div class="nl on" onclick="showPage('home')">Home</div>
+    <div class="nl" onclick="showPage('ambition')">Ambition</div>
+    <div class="nl" onclick="showPage('discovery')">Value Engine</div>
+    <div class="nl" onclick="showPage('playbooks')">CXO Playbooks</div>
+    <div class="nl" onclick="showPage('opmodel')">Operating Model</div>
+    <div class="nl" onclick="showPage('catalogue')">AI Catalogue</div>
+    <div class="nl" onclick="showPage('success')">Success Stories</div>
+    <div class="nl cta" onclick="showPage('playbooks')">Get Started →</div>
+  </div>
+</nav>
+
+<!-- HOME -->
+<section class="pg on" id="home">
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-inner">
+      <div class="hero-badge">SAP &amp; AI&D Innovation Hub · Established 2025</div>
+      <h1 class="hero-h1"><span class="cy">AI Edge</span> on SAP</h1>
+      <h2 class="hero-h1" style="font-size:clamp(18px,3vw,42px);font-weight:600;color:var(--t2);">System of Record <span class="hero-arrow">→</span> <span class="pu">System of Intelligence</span></h2>
+      <p class="hero-sub">A joint AI, Analytics &amp; Data practice built on the SAP ecosystem — purpose-engineered to turn enterprise data into <strong>autonomous decisions</strong>, <strong>predictive foresight</strong>, and <strong>measurable outcomes</strong> for every CXO in the C-Suite.</p>
+      <div class="hero-pills">
+        <div class="hpill"><div class="dot" style="background:var(--c1)"></div>Agentic AI on SAP BTP</div>
+        <div class="hpill"><div class="dot" style="background:var(--c2)"></div>Azure OpenAI + Databricks</div>
+        <div class="hpill"><div class="dot" style="background:var(--c4)"></div>CXO-Centric Outcomes</div>
+        <div class="hpill"><div class="dot" style="background:var(--c5)"></div>$65M Revenue Target</div>
+        <div class="hpill"><div class="dot" style="background:var(--c3)"></div>Clean Core. Smart Edge.</div>
+      </div>
+      <div class="hero-btns">
+        <button class="btn-p" onclick="showPage('ambition')">Explore the Ambition</button>
+        <button class="btn-s" onclick="showPage('catalogue')">View AI Catalogue</button>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div class="si"><div class="si-n">$65M</div><div class="si-l">Revenue North Star</div></div>
+      <div class="si"><div class="si-n">6+</div><div class="si-l">CXO Playbooks</div></div>
+      <div class="si"><div class="si-n">30+</div><div class="si-l">AI Agents &amp; Models</div></div>
+      <div class="si"><div class="si-n">3</div><div class="si-l">Alliance Partners</div></div>
+    </div>
+  </div>
+
+  <div class="nav6">
+    <div class="nb" onclick="showPage('ambition')"><div class="nb-accent" style="background:var(--c1)"></div><div class="nb-num">01</div><div class="nb-ico">🎯</div><div class="nb-t">Ambition &amp; North Star</div><div class="nb-d">$65M target. AI Edge architecture. SAP + Azure + Databricks alliance engine. 12-month GTM roadmap.</div></div>
+    <div class="nb" onclick="showPage('discovery')"><div class="nb-accent" style="background:var(--c2)"></div><div class="nb-num">02</div><div class="nb-ico">🔍</div><div class="nb-t">SAP Value Discovery Engine</div><div class="nb-d">Data-led Phase 0 diagnostics across O2C, P2P, R2R. Quantified transformation business case in 7 weeks.</div></div>
+    <div class="nb" onclick="showPage('playbooks')"><div class="nb-accent" style="background:var(--c4)"></div><div class="nb-num">03</div><div class="nb-ico">📋</div><div class="nb-t">CXO Intelligence Playbooks</div><div class="nb-d">CFO, CAE, CRO, CMO, SCM, CHRO. Five strategic outcomes per CXO. AI capability stack mapped to each.</div></div>
+    <div class="nb" onclick="showPage('opmodel')"><div class="nb-accent" style="background:var(--c5)"></div><div class="nb-num">04</div><div class="nb-ico">⚙️</div><div class="nb-t">Operating Model</div><div class="nb-d">7-phase build engine. AI Edge Factory. CXO-aligned domain pods. 3-layer delivery architecture.</div></div>
+    <div class="nb" onclick="showPage('catalogue')"><div class="nb-accent" style="background:var(--c3)"></div><div class="nb-num">05</div><div class="nb-ico">🤖</div><div class="nb-t">AI Asset Catalogue</div><div class="nb-d">30+ AI Agents, predictive models, and intelligence layers. Live demos. Built and in-flight.</div></div>
+    <div class="nb" onclick="showPage('success')"><div class="nb-accent" style="background:var(--c2)"></div><div class="nb-num">06</div><div class="nb-ico">🏆</div><div class="nb-t">Success Stories</div><div class="nb-d">EY.AI Risk Intelligence ($1.7M funded). EWM live at ExxonMobil. Launched at SAP Sapphire 2026.</div></div>
+  </div>
+
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-eye">The Big Idea</div>
+      <div class="sh-h">The Intelligence Layer <span class="cy">on Top of SAP</span></div>
+      <div class="sh-s">SAP S/4HANA is the stable foundation — the system of record. The SAP &amp; AI&D Innovation Hub is the differentiation engine layered on top: where agentic AI executes decisions, automation drives efficiency, and analytics drives foresight.</div>
+      <div class="sh-line"></div>
+    </div>
+    <div class="layers">
+      <div class="layer ly-ey"><div class="layer-ico">⚡</div><div class="layer-txt"><div class="lt">EY AI Edge Layer — Differentiation Engine</div><div class="ls">Agentic AI executes decisions · Automation drives efficiency · Analytics drives foresight</div></div><div class="layer-badge lb-ey">Intelligence</div></div>
+      <div style="text-align:center;font-size:11px;color:var(--t3);margin:4px 0;font-family:var(--fm);">↕ bi-directional via CI/CD pipelines &amp; API mesh</div>
+      <div class="layer ly-pl"><div class="layer-ico">☁️</div><div class="layer-txt"><div class="lt">AI Platform — Azure OpenAI · Databricks Lakehouse · SAP BTP</div><div class="ls">Feature store · Model registry · Real-time inference · Data fabric</div></div><div class="layer-badge lb-pl">Platform</div></div>
+      <div style="text-align:center;font-size:11px;color:var(--t3);margin:4px 0;font-family:var(--fm);">↕ SAP connectors + semantic data layer</div>
+      <div class="layer ly-sap"><div class="layer-ico">🏗️</div><div class="layer-txt"><div class="lt">SAP S/4HANA — Lean Core Foundation (Untouched)</div><div class="ls">Stable · Standardized · Clean ERP · System of Record</div></div><div class="layer-badge lb-sap">Core</div></div>
+    </div>
+    <div class="div"></div>
+    <div style="text-align:center;padding:32px;background:var(--bg2);border-radius:var(--r12);border:1px solid var(--bd);">
+      <div style="font-size:11px;font-family:var(--fm);color:var(--t4);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;">The Positioning</div>
+      <div class="pitch-quote">"SAP runs transactions. Microsoft runs intelligence. EY orchestrates outcomes."</div>
+    </div>
+  </div>
+</section>
+
+<!-- AMBITION -->
+<section class="pg" id="ambition">
+  <div class="wrap">
+    <div class="sh"><div class="sh-eye">North Star</div><div class="sh-h">Bold Ambition. <span class="cy">Executable Strategy.</span></div><div class="sh-s">A $65M practice built at the intersection of SAP transformation and agentic AI — capturing 10% of a $650M SAP addressable market through outcome-led CXO solutions.</div><div class="sh-line"></div></div>
+    <div class="g2">
+      <div>
+        <div class="sh-eye" style="margin-bottom:10px;">Market Math → $65M Target</div>
+        <div style="background:#fff;border:1px solid var(--bd);border-radius:var(--r12);overflow:hidden;box-shadow:var(--sh);">
+          <div style="padding:14px 18px;background:var(--c1l);border-bottom:1px solid var(--bd);font-size:12.5px;font-weight:700;color:var(--c1);font-family:var(--fb);">Revenue Lever Breakdown</div>
+          <div class="mkt-row"><span>10 large deals ($3M avg)</span><span class="mkt-amt">$30M</span></div>
+          <div class="mkt-row"><span>20 mid-market deals ($1M avg)</span><span class="mkt-amt">$20M</span></div>
+          <div class="mkt-row"><span>Recurring platform subscriptions</span><span class="mkt-amt">$10M</span></div>
+          <div class="mkt-row"><span>Alliance co-sell (SAP · MSFT · Databricks)</span><span class="mkt-amt">$5M</span></div>
+          <div class="mkt-row" style="font-weight:700;background:var(--c4l);"><span>Total Annual Target (Year 3)</span><span class="mkt-amt" style="font-size:17px;">$65M</span></div>
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:var(--t3);line-height:1.65;padding:12px 16px;background:var(--bg2);border-radius:8px;border:1px solid var(--bd);"><strong style="color:var(--c1);">3-Year Ramp:</strong> Year 1 → $15M &nbsp;|&nbsp; Year 2 → $38M &nbsp;|&nbsp; Year 3 → $65M<br>SAP target book: ~$650M · Capture target: 10%</div>
+      </div>
+      <div>
+        <div class="sh-eye" style="margin-bottom:10px;">Business Case</div>
+        <div class="g2" style="gap:12px;">
+          <div class="card" style="padding:18px;"><div style="font-size:11px;font-weight:700;color:var(--c1);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-family:var(--fm);">Client Value</div><div class="fp-b">20–40% process cost reduction</div><div class="fp-b">2–5× faster decision cycles</div><div class="fp-b">Clean core preserved</div><div class="fp-b">Real-time risk posture</div></div>
+          <div class="card" style="padding:18px;"><div style="font-size:11px;font-weight:700;color:var(--c4);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-family:var(--fm);">EY Value</div><div class="fp-b">Higher margins vs SI work</div><div class="fp-b">Recurring platform revenue</div><div class="fp-b">Sticky AI-led transformation</div><div class="fp-b">60–70% asset reuse</div></div>
+        </div>
+        <div class="card" style="margin-top:12px;padding:18px;background:var(--c2l);border-color:rgba(91,33,182,.2);">
+          <div style="font-size:11px;font-weight:700;color:var(--c2);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-family:var(--fm);">GTM Sell Motion</div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <div style="padding:6px 12px;background:#fff;border:1px solid rgba(0,87,184,.25);border-radius:6px;font-weight:700;color:var(--c1);font-size:11.5px;">① Land</div>
+            <span style="color:var(--t4);">→</span>
+            <div style="padding:6px 12px;background:#fff;border:1px solid rgba(91,33,182,.25);border-radius:6px;font-weight:700;color:var(--c2);font-size:11.5px;">② Expand</div>
+            <span style="color:var(--t4);">→</span>
+            <div style="padding:6px 12px;background:#fff;border:1px solid rgba(5,150,105,.25);border-radius:6px;font-weight:700;color:var(--c4);font-size:11.5px;">③ Lock-In</div>
+          </div>
+          <div style="font-size:11.5px;color:var(--t3);margin-top:8px;line-height:1.55;">AI Opportunity Assessment → 2–3 CXO use cases → Managed AI Edge Platform</div>
+        </div>
+      </div>
+    </div>
+    <div class="div"></div>
+    <div class="sh"><div class="sh-eye">Alliance Strategy</div><div class="sh-h">Three Pillars. One <span class="cy">Unified Intelligence Stack.</span></div></div>
+    <div class="alli-grid">
+      <div class="alli-card" style="border-top:4px solid var(--c4);"><div class="alli-logo" style="color:var(--c4);">⬡ SAP</div><div style="font-size:10px;font-family:var(--fm);color:var(--t3);margin-bottom:8px;">CLEAN CORE + BTP + JOULE</div><div class="alli-pitch">"SAP runs transactions — we run the intelligence layer on top."</div><div class="alli-b">SAP BTP — AI orchestration &amp; integration</div><div class="alli-b">Joule AI copilot — embedded workflow intelligence</div><div class="alli-b">Co-innovation labs — joint asset development</div></div>
+      <div class="alli-card" style="border-top:4px solid #0078d4;"><div class="alli-logo" style="color:#0078d4;">⊞ Microsoft</div><div style="font-size:10px;font-family:var(--fm);color:var(--t3);margin-bottom:8px;">AZURE OPENAI + FABRIC</div><div class="alli-pitch">"Microsoft runs the intelligence — EY orchestrates the outcomes."</div><div class="alli-b">Azure OpenAI — LLM backbone for all agents</div><div class="alli-b">Microsoft Fabric — unified data analytics layer</div><div class="alli-b">Copilot integrations — CXO AI assistants</div></div>
+      <div class="alli-card" style="border-top:4px solid var(--c3);"><div class="alli-logo" style="color:var(--c3);">◈ Databricks</div><div style="font-size:10px;font-family:var(--fm);color:var(--t3);margin-bottom:8px;">LAKEHOUSE + FEATURE STORE</div><div class="alli-pitch">"The data foundation every AI agent runs on."</div><div class="alli-b">Databricks Lakehouse — canonical data foundation</div><div class="alli-b">Feature store — pre-built ML feature pipelines</div><div class="alli-b">Real-time analytics — streaming inference</div></div>
+    </div>
+    <div class="div"></div>
+    <div class="sh"><div class="sh-eye">Execution Roadmap</div><div class="sh-h">12 Months to <span class="cy">Market Leadership</span></div></div>
+    <div class="rm-grid">
+      <div class="rm-card" style="border-top:3px solid var(--c1);"><div class="rm-q">Q1 · FOUNDATION</div><div class="rm-item">Build 5 flagship AI agent demos</div><div class="rm-item">Secure 3 lighthouse clients</div><div class="rm-item">Stand up AI Edge Factory</div><div class="rm-item">Internal funding ($2–3M approved)</div></div>
+      <div class="rm-card" style="border-top:3px solid var(--c2);"><div class="rm-q" style="color:var(--c2);">Q2 · MONETIZE</div><div class="rm-item">Close $10–15M in pipeline</div><div class="rm-item">Formalize alliances (SAP, MSFT, Databricks)</div><div class="rm-item">Launch CFO &amp; CAE suites commercially</div><div class="rm-item">Deploy 6–8 client engagements</div></div>
+      <div class="rm-card" style="border-top:3px solid var(--c4);"><div class="rm-q" style="color:var(--c4);">Q3 · SCALE</div><div class="rm-item">Scale to 10+ active clients</div><div class="rm-item">Launch platform subscription model</div><div class="rm-item">Activate co-sell with alliance partners</div><div class="rm-item">Launch SCM &amp; CHRO suites</div></div>
+      <div class="rm-card" style="border-top:3px solid var(--c5);"><div class="rm-q" style="color:var(--c5);">Q4 · MOMENTUM</div><div class="rm-item">$30M+ cumulative revenue run-rate</div><div class="rm-item">60–70% asset reuse achieved</div><div class="rm-item">Industry vertical expansion</div><div class="rm-item">Q1 Year 2 pipeline of $25M+</div></div>
+    </div>
+    <div class="div"></div>
+    <div class="sh"><div class="sh-eye">Investment Strategy</div><div class="sh-h">From <span class="cy">Concept to Self-Funded</span> in 18 Months</div></div>
+    <div class="fund-grid">
+      <div class="fp" style="border-top:3px solid var(--c1);"><div class="fp-ph">PHASE 1 · 0–3 MONTHS</div><div class="fp-t">Concept &amp; Build</div><div class="fp-b">Internal funding: $2–3M</div><div class="fp-b">6–8 flagship agent demos</div><div class="fp-b">Dev &amp; demo environments live</div><div class="fp-b">Core team assembled</div></div>
+      <div class="fp" style="border-top:3px solid var(--c2);"><div class="fp-ph" style="color:var(--c2);">PHASE 2 · 3–9 MONTHS</div><div class="fp-t">Alliance Co-Funding</div><div class="fp-b">Azure AI credits (Microsoft)</div><div class="fp-b">SAP co-innovation funding</div><div class="fp-b">Databricks platform access</div><div class="fp-b">3 lighthouse client deals</div></div>
+      <div class="fp" style="border-top:3px solid var(--c4);"><div class="fp-ph" style="color:var(--c4);">PHASE 3 · 9–18 MONTHS</div><div class="fp-t">Self-Funded Expansion</div><div class="fp-b">Deal revenue funds next build</div><div class="fp-b">Reusable accelerator library</div><div class="fp-b">Platform subscription ARR growing</div><div class="fp-b">10+ enterprise clients active</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE DISCOVERY -->
+<section class="pg" id="discovery">
+  <div class="wrap">
+    <div class="sh"><div class="sh-eye">SAP Value Discovery Engine</div><div class="sh-h">Phase 0 Reimagined. <span class="cy">Data-Led. Fast. Quantified.</span></div><div class="sh-s">Transforms SAP ECC transaction data into a quantified, insight-rich diagnostic — enabling faster, more credible S/4HANA transformation business cases in weeks, not months.</div><div class="sh-line"></div></div>
+    <div style="text-align:center;margin-bottom:28px;"><a href="https://lemon-grass-085197a0f.7.azurestaticapps.net/" target="_blank"><button class="btn-p" style="font-size:14px;padding:13px 32px;">Launch Value Discovery Engine →</button></a></div>
+    <div class="vd-flow">
+      <div class="vd-node"><div class="vd-ico">🗄️</div><div class="vd-lbl">SAP ECC Data</div><div class="vd-sub">Raw transaction data</div></div>
+      <div class="vd-arr">→</div>
+      <div class="vd-node"><div class="vd-ico">⚙️</div><div class="vd-lbl">FDL Ingestion</div><div class="vd-sub">Databricks pipeline</div></div>
+      <div class="vd-arr">→</div>
+      <div class="vd-node"><div class="vd-ico">🧠</div><div class="vd-lbl">AI Diagnostics</div><div class="vd-sub">Anomaly detection</div></div>
+      <div class="vd-arr">→</div>
+      <div class="vd-node"><div class="vd-ico">📊</div><div class="vd-lbl">KPI Baseline</div><div class="vd-sub">Fact-based metrics</div></div>
+      <div class="vd-arr">→</div>
+      <div class="vd-node"><div class="vd-ico">💰</div><div class="vd-lbl">Value Quantification</div><div class="vd-sub">Leakage sizing</div></div>
+      <div class="vd-arr">→</div>
+      <div class="vd-node"><div class="vd-ico">📋</div><div class="vd-lbl">Transformation Roadmap</div><div class="vd-sub">Prioritized actions</div></div>
+    </div>
+    <div class="div" style="margin:24px 0;"></div>
+    <div class="sh"><div class="sh-eye">Process Coverage</div><div class="sh-h">Three Core <span class="cy">Enterprise Processes</span></div></div>
+    <div class="process-grid">
+      <div class="pc" style="border-top:3px solid var(--c1);"><div class="pc-t">Order to Cash (O2C)</div><div class="pc-s">Revenue realization · Customer experience</div><div class="pc-m">Order → PGI Cycle Time</div><div class="pc-m">Order → Invoice Cycle</div><div class="pc-m">OTIF — On-Time In-Full Rate</div><div class="pc-m">Credit Override &amp; Rework Rate</div></div>
+      <div class="pc" style="border-top:3px solid var(--c2);"><div class="pc-t">Procure to Pay (P2P)</div><div class="pc-s">Cost control · Supplier performance</div><div class="pc-m">PR → PO Cycle Time</div><div class="pc-m">Maverick Spend % Detection</div><div class="pc-m">Blocked &amp; Duplicate Invoice Count</div><div class="pc-m">Non-Approved Vendor Exposure</div></div>
+      <div class="pc" style="border-top:3px solid var(--c4);"><div class="pc-t">Record to Report (R2R)</div><div class="pc-s">Financial integrity · Close excellence</div><div class="pc-m">Close Cycle Duration</div><div class="pc-m">Manual Journal Entry %</div><div class="pc-m">Late Adjustment Rate</div><div class="pc-m">Weekend Posting Anomalies</div></div>
+    </div>
+    <div class="div" style="margin:24px 0;"></div>
+    <div class="sh"><div class="sh-eye">Why It Differentiates</div><div class="sh-h">From <span class="cy">Interview-Led</span> to Intelligence-Led</div></div>
+    <div class="g2">
+      <div style="padding:16px 18px;background:#fff5f5;border:1px solid #fecaca;border-radius:10px;border-left:4px solid var(--c3);"><div style="font-size:11px;font-weight:700;color:var(--c3);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;font-family:var(--fm);">Traditional Phase 0</div><div class="fp-b" style="color:var(--c3);">Interview-dependent — slow and subjective</div><div class="fp-b" style="color:var(--c3);">Limited data-driven starting point</div><div class="fp-b" style="color:var(--c3);">Qualitative value articulation only</div><div class="fp-b" style="color:var(--c3);">6–12 weeks for a business case</div></div>
+      <div style="padding:16px 18px;background:var(--c4l);border:1px solid rgba(5,150,105,.2);border-radius:10px;border-left:4px solid var(--c4);"><div style="font-size:11px;font-weight:700;color:var(--c4);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;font-family:var(--fm);">SAP &amp; AI&D Value Discovery Engine</div><div class="fp-b">Fact-based baseline from Day 1</div><div class="fp-b">Quantified value leakage — dollars, not opinions</div><div class="fp-b">AI anomaly detection across 100% of transactions</div><div class="fp-b">7-week accelerated delivery model</div></div>
+    </div>
+    <div class="div" style="margin:24px 0;"></div>
+    <div class="sh"><div class="sh-eye">Delivery Timeline</div><div class="sh-h">7-Week <span class="cy">Accelerated Deployment</span></div></div>
+    <div class="gantt-wrap">
+      <div class="gantt-hdr"><div class="gantt-hdr-lbl"></div><div class="gantt-weeks"><div class="gw-lbl">W1</div><div class="gw-lbl">W2</div><div class="gw-lbl">W3</div><div class="gw-lbl">W4</div><div class="gw-lbl">W5</div><div class="gw-lbl">W6</div><div class="gw-lbl">W7</div></div></div>
+      <div class="gantt-row"><div class="gantt-lbl">Platform Readiness</div><div class="gantt-bars"><div class="gb on"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div></div></div>
+      <div class="gantt-row"><div class="gantt-lbl">Feature Definition</div><div class="gantt-bars"><div class="gb on"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div></div></div>
+      <div class="gantt-row"><div class="gantt-lbl">Architecture Design</div><div class="gantt-bars"><div class="gb"></div><div class="gb on"></div><div class="gb on"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div></div></div>
+      <div class="gantt-row"><div class="gantt-lbl">Build — Pipelines &amp; KPIs</div><div class="gantt-bars"><div class="gb"></div><div class="gb"></div><div class="gb on"></div><div class="gb on"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div></div></div>
+      <div class="gantt-row"><div class="gantt-lbl">Validate &amp; Test</div><div class="gantt-bars"><div class="gb"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div><div class="gb on"></div><div class="gb"></div><div class="gb"></div></div></div>
+      <div class="gantt-row"><div class="gantt-lbl">Client Engagement &amp; Deploy</div><div class="gantt-bars"><div class="gb"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div><div class="gb"></div><div class="gb on"></div><div class="gb on"></div></div></div>
+    </div>
+  </div>
+</section>
+<!-- CXO PLAYBOOKS -->
+<section class="pg" id="playbooks">
+  <div class="wrap">
+    <div class="sh"><div class="sh-eye">CXO Intelligence Playbooks</div><div class="sh-h">Outcome-Led. <span class="cy">AI-Powered.</span> Built on SAP.</div><div class="sh-s">Six purpose-built AI capability stacks — one for every key CXO in the enterprise. Each anchored to five strategic outcomes, powered by agentic AI and predictive models on the SAP ecosystem.</div><div class="sh-line"></div></div>
+    <div class="ctabs">
+      <div class="ct on" onclick="showCXO('cfo')">📊 CFO</div>
+      <div class="ct" onclick="showCXO('cae')">🛡️ CAE</div>
+      <div class="ct" onclick="showCXO('cro')">📈 CRO</div>
+      <div class="ct" onclick="showCXO('cmo')">📣 CMO</div>
+      <div class="ct" onclick="showCXO('scm')">🔗 Supply Chain</div>
+      <div class="ct" onclick="showCXO('chro')">🤝 CHRO</div>
+    </div>
+
+    <!-- CFO -->
+    <div class="cpanel on" id="cxo-cfo">
+      <div class="cxo-banner" style="border-left:4px solid var(--c4);"><div class="cxo-ico" style="background:var(--c4l);">📊</div><div><div class="cxo-tt">SAP &amp; AI&D for CFO <span style="font-size:14px;font-weight:400;color:var(--t3);">— Chief Financial Officer</span></div><div class="cxo-sub">Anchor CXO · Highest AI maturity · $2–5M per engagement</div></div></div>
+      <div class="vstmt"><div class="vstmt-lbl">Value Statement</div><div class="vstmt-txt">"Maximize financial performance and translate strategy into capital efficiency, operating leverage, and investor confidence — using AI to see further, close faster, and protect every dollar."</div></div>
+      <div class="sh-eye" style="margin-bottom:10px;">Five Signature Outcomes</div>
+      <div class="out5">
+        <div class="oc" style="--oc-col:var(--c4)"><div class="oc-n">01</div><div class="oc-t">Margins Protected</div><div class="oc-d">Improve EBITDA and operating leverage</div></div>
+        <div class="oc" style="--oc-col:var(--c1)"><div class="oc-n">02</div><div class="oc-t">Capital Freed</div><div class="oc-d">Accelerate DSO/DPO/cash conversion</div></div>
+        <div class="oc" style="--oc-col:var(--c2)"><div class="oc-n">03</div><div class="oc-t">Risk Contained</div><div class="oc-d">Ensure compliance and financial risk mitigation</div></div>
+        <div class="oc" style="--oc-col:var(--c5)"><div class="oc-n">04</div><div class="oc-t">Decisions Accelerated</div><div class="oc-d">Enable data-driven M&A and investment decisions</div></div>
+        <div class="oc" style="--oc-col:var(--c3)"><div class="oc-n">05</div><div class="oc-t">Close Compressed</div><div class="oc-d">Reduce close cycles from weeks to days</div></div>
+      </div>
+      <div class="sh-eye" style="margin-top:22px;margin-bottom:10px;">AI Capabilities Stack</div>
+      <div class="cap-grid">
+        <div class="cap-card" onclick="window.open('https://pv-fc-dev-ui.gentleriver-b38b5f4f.eastus2.azurecontainerapps.io/','_blank')"><span class="cap-type t-intel">Command Center</span><div class="cap-name" style="color:var(--c1);">Finance Command Center 🔗</div><div class="cap-pitch">Single pane of glass for the CFO — real-time P&L, cash, risk, and close status unified in one AI-powered operating dashboard.</div><div class="cap-tags"><span class="ctag tsc">Stakeholder Confidence</span><span class="ctag tr">Revenue</span></div></div>
+        <div class="cap-card" onclick="showModal('Intelligent Financial Close Agent','Autonomously orchestrates period-end close tasks, variance analysis, and journal approvals using AI workflows on SAP S/4HANA Finance — compressing close cycles by up to 40% through agentic task sequencing.')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name">Intelligent Financial Close Agent</div><div class="cap-pitch">Compresses period-end close cycles by up to 40% through autonomous task orchestration and variance approvals.</div><div class="cap-tags"><span class="ctag tc">Operating Cost</span><span class="ctag tsc">Stakeholder Confidence</span></div></div>
+        <div class="cap-card" onclick="showModal('Predictive Cash Flow & Liquidity Model','Forecasts 13-week rolling cash positions using HANA ML on SAP Treasury data. AI-driven scenario modeling eliminates liquidity surprises and optimizes working capital deployment in real time.')"><span class="cap-type t-model">Predictive Model</span><div class="cap-name">Predictive Cash Flow &amp; Liquidity Model</div><div class="cap-pitch">Eliminates liquidity surprises with AI-driven 13-week rolling cash forecasts and scenario modeling.</div><div class="cap-tags"><span class="ctag tbl">Balance Sheet</span><span class="ctag tsc">Stakeholder Confidence</span></div></div>
+        <div class="cap-card" onclick="showModal('Autonomous Spend Intelligence Agent','Continuously monitors PO and invoice data streams via SAP Ariba and Datasphere connectors. Detects maverick spend, duplicate payments, and policy violations before they post to the general ledger.')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name">Autonomous Spend Intelligence Agent</div><div class="cap-pitch">Detects maverick spend, duplicate payments, and policy violations before they hit the ledger.</div><div class="cap-tags"><span class="ctag tc">Operating Cost</span><span class="ctag trk">Risk</span></div></div>
+        <div class="cap-card" onclick="showModal('Margin & Profitability Attribution Model','Decomposes P&L at product, customer, and channel level using ML on SAP S/4HANA and BW/4HANA data. Surfaces hidden margin diluters and guides precision pricing decisions in real time.')"><span class="cap-type t-model">Predictive Model</span><div class="cap-name">Margin &amp; Profitability Attribution Model</div><div class="cap-pitch">Surfaces hidden margin diluters at product, customer, and channel level to guide precision pricing.</div><div class="cap-tags"><span class="ctag tr">Revenue</span><span class="ctag tc">Operating Cost</span></div></div>
+        <div class="cap-card" onclick="showModal('Financial Anomaly & Fraud Detection Agent','Continuous AI-powered surveillance across GL entries and payment runs. Trained on SAP Financial Compliance Management data to flag fraud patterns in real time with explainable, actionable alerts.')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name">Financial Anomaly &amp; Fraud Detection Agent</div><div class="cap-pitch">Runs continuous AI surveillance across GL entries and payment runs to flag fraud in real time.</div><div class="cap-tags"><span class="ctag trk">Risk</span><span class="ctag tsc">Stakeholder Confidence</span></div></div>
+      </div>
+    </div>
+
+    <!-- CAE -->
+    <div class="cpanel" id="cxo-cae">
+      <div class="cxo-banner" style="border-left:4px solid var(--c3);"><div class="cxo-ico" style="background:var(--c3l);">🛡️</div><div><div class="cxo-tt">SAP &amp; AI&D for CAE <span style="font-size:14px;font-weight:400;color:var(--t3);">— Chief Audit Executive</span></div><div class="cxo-sub">High-margin · Differentiated · Recurring compliance platform model</div></div></div>
+      <div class="vstmt"><div class="vstmt-lbl">Value Statement</div><div class="vstmt-txt">"Protect enterprise value by providing independent, intelligence-led assurance that risks are managed, controls work, and the organization operates with integrity — turning audit from a compliance obligation into a strategic shield for the Board and C-Suite."</div></div>
+      <div class="sh-eye" style="margin-bottom:10px;">Five Signature Outcomes</div>
+      <div class="out5">
+        <div class="oc" style="--oc-col:var(--c3)"><div class="oc-n">01</div><div class="oc-t">Zero Surprises</div><div class="oc-d">No surprise losses. Risk exposure eliminated.</div></div>
+        <div class="oc" style="--oc-col:var(--c5)"><div class="oc-n">02</div><div class="oc-t">Every Dollar Counted</div><div class="oc-d">Prevent fraud &amp; leakage across all transactions.</div></div>
+        <div class="oc" style="--oc-col:var(--c4)"><div class="oc-n">03</div><div class="oc-t">Always Audit-Ready</div><div class="oc-d">SOX, GDPR, IFRS compliance. Never fined.</div></div>
+        <div class="oc" style="--oc-col:var(--c1)"><div class="oc-n">04</div><div class="oc-t">Audit Automated</div><div class="oc-d">Continuous monitoring with fewer resources.</div></div>
+        <div class="oc" style="--oc-col:var(--c2)"><div class="oc-n">05</div><div class="oc-t">Board Sleeps Well</div><div class="oc-d">Stakeholder confidence. See risk before you commit.</div></div>
+      </div>
+      <div class="sh-eye" style="margin-top:22px;margin-bottom:10px;">AI Capabilities Stack</div>
+      <div class="cap-grid">
+        <div class="cap-card" style="border-color:rgba(0,87,184,.2);" onclick="window.open('https://www.figma.com/proto/R0FF6KU0KCEzH6BmA4YKNw/Enterprise-Analytics?page-id=2002%3A27767&node-id=2110-179250&viewport=108%2C196%2C0.32&t=eOsxNCZirkpffvXM-1&scaling=contain&content-scaling=fixed','_blank')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name" style="color:var(--c1);">EY.ai for Risk Intelligence 🔗</div><div class="cap-pitch">Replaces sample-based audits with 24/7 automated controls testing across 100% of SAP transactions — continuous controls monitoring at enterprise scale.</div><div class="cap-tags"><span class="ctag trk">Risk</span><span class="ctag tsc">Stakeholder Confidence</span></div></div>
+        <div class="cap-card" style="border-color:rgba(0,87,184,.2);" onclick="window.open('https://eycatalyst.azurewebsites.net/mockup?inspirationId=df318dce-2e64-471c-b0a2-6ee625337b50','_blank')"><span class="cap-type t-model">Predictive Model</span><div class="cap-name" style="color:var(--c1);">Dynamic Risk Assessment (DRA) 🔗</div><div class="cap-pitch">Dynamically ranks the enterprise risk universe so audit teams focus only on highest-impact areas — AI-powered risk prioritization at scale.</div><div class="cap-tags"><span class="ctag trk">Risk</span><span class="ctag tc">Operating Cost</span></div></div>
+        <div class="cap-card" style="border-color:rgba(0,87,184,.2);" onclick="window.open('https://abxgta.github.io/Risk_Manual_Upload/','_blank')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name" style="color:var(--c1);">Audit Trail Intelligence Agent 🔗</div><div class="cap-pitch">Detects SoD violations and insider anomalies by autonomously reconstructing full SAP transaction lineage across all modules.</div><div class="cap-tags"><span class="ctag trk">Risk</span><span class="ctag tc">Operations Audit</span></div></div>
+        <div class="cap-card" style="border-color:rgba(0,87,184,.2);" onclick="window.open('https://abxgta.github.io/Risk/','_blank')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name" style="color:var(--c1);">Audit Committee Prep Agent 🔗</div><div class="cap-pitch">Maintains the quarterly Audit Committee calendar and autonomously prepares board-ready content, risk summaries, and control attestations.</div><div class="cap-tags"><span class="ctag tsc">Stakeholder Confidence</span><span class="ctag trk">Risk</span></div></div>
+        <div class="cap-card" style="border-color:rgba(0,87,184,.2);" onclick="window.open('https://abxgta.github.io/Risk2_External_Event/','_blank')"><span class="cap-type t-intel">Intelligence</span><div class="cap-name" style="color:var(--c1);">End-to-End Touchless Audit 🔗</div><div class="cap-pitch">Fully autonomous audit pipeline triggered by internal or external events — from signal detection through investigation to board-ready report generation.</div><div class="cap-tags"><span class="ctag trk">Risk</span><span class="ctag tc">Touchless Audit</span></div></div>
+      </div>
+    </div>
+
+    <!-- CRO -->
+    <div class="cpanel" id="cxo-cro">
+      <div class="cxo-banner" style="border-left:4px solid var(--c3);"><div class="cxo-ico" style="background:var(--c3l);">📈</div><div><div class="cxo-tt">SAP &amp; AI&D for CRO <span style="font-size:14px;font-weight:400;color:var(--t3);">— Chief Revenue Officer</span></div><div class="cxo-sub">Revenue acceleration · Pipeline intelligence · Customer lifetime value</div></div></div>
+      <div class="vstmt"><div class="vstmt-lbl">Value Statement</div><div class="vstmt-txt">"Unify go-to-market functions to maximize revenue capture across every customer segment, channel, and lifecycle stage — turning SAP transaction data into a precision revenue engine."</div></div>
+      <div class="sh-eye" style="margin-bottom:10px;">Five Signature Outcomes</div>
+      <div class="out5">
+        <div class="oc" style="--oc-col:var(--c4)"><div class="oc-n">01</div><div class="oc-t">Top Line Grown</div><div class="oc-d">Grow revenue and market share systematically.</div></div>
+        <div class="oc" style="--oc-col:var(--c1)"><div class="oc-n">02</div><div class="oc-t">Deals Bigger</div><div class="oc-d">Increase ACV, deal size, and upsell capture.</div></div>
+        <div class="oc" style="--oc-col:var(--c3)"><div class="oc-n">03</div><div class="oc-t">Cycles Faster</div><div class="oc-d">Reduce sales cycle length and CAC significantly.</div></div>
+        <div class="oc" style="--oc-col:var(--c5)"><div class="oc-n">04</div><div class="oc-t">Retention Maximized</div><div class="oc-d">Improve NRR and expansion revenue.</div></div>
+        <div class="oc" style="--oc-col:var(--c2)"><div class="oc-n">05</div><div class="oc-t">Leakage Stopped</div><div class="oc-d">Recover every dollar from billing &amp; contract gaps.</div></div>
+      </div>
+      <div class="sh-eye" style="margin-top:22px;margin-bottom:10px;">AI Capabilities Stack</div>
+      <div class="cap-grid">
+        <div class="cap-card" style="border-color:rgba(0,87,184,.2);" onclick="window.open('https://www.figma.com/proto/R0FF6KU0KCEzH6BmA4YKNw/Enterprise-Analytics?page-id=2002%3A27767&node-id=2079-64620&viewport=108%2C196%2C0.32&t=eOsxNCZirkpffvXM-1&scaling=contain&content-scaling=fixed','_blank')"><span class="cap-type t-intel">Command Center</span><div class="cap-name" style="color:var(--c1);">Revenue Command Center 🔗</div><div class="cap-pitch">Single pane of glass for the CRO — pipeline health, forecast accuracy, deal velocity, and customer profitability in one AI dashboard.</div><div class="cap-tags"><span class="ctag tr">Revenue</span><span class="ctag tsc">Stakeholder Confidence</span></div></div>
+        <div class="cap-card" onclick="showModal('Revenue Forecasting & Signal Agent','AI-calibrated forecast engine synthesizing SAP C4C pipeline, SD order history, and external market signals via ensemble ML — reducing forecast error by 30% and replacing spreadsheet-based forecasting.')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name">Revenue Forecasting &amp; Signal Agent</div><div class="cap-pitch">Reduces revenue forecast error by up to 30% by synthesizing pipeline, order history, and real-time market signals.</div><div class="cap-tags"><span class="ctag tr">Revenue</span><span class="ctag tsc">Stakeholder Confidence</span></div></div>
+        <div class="cap-card" onclick="showModal('Price & Margin Optimization Model','Real-time deal pricing recommendation API analyzing customer WTP, competitive signals, and margin floors from SAP SD and CPQ data. Surfaced directly in CRM for sales reps at point of quoting.')"><span class="cap-type t-model">Predictive Model</span><div class="cap-name">Price &amp; Margin Optimization Model</div><div class="cap-pitch">Recommends optimal deal-level pricing using customer willingness-to-pay and margin threshold analysis from SAP.</div><div class="cap-tags"><span class="ctag tr">Revenue</span><span class="ctag tc">Operating Cost</span></div></div>
+        <div class="cap-card" onclick="showModal('Contract Revenue Leakage Agent','AI-driven reconciliation across SAP CLM and S/4HANA billing — detects billing gaps, unenforced contract terms, missed SLA penalties, and volume discount miscalculations in real time.')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name">Contract Revenue Leakage Agent</div><div class="cap-pitch">Recovers lost revenue by identifying billing gaps, unenforced contract terms, and missed SLA penalties automatically.</div><div class="cap-tags"><span class="ctag tr">Revenue</span><span class="ctag trk">Risk</span></div></div>
+        <div class="cap-card" onclick="showModal('Cross-Sell & Upsell Propensity Agent','Next-best-offer recommendation engine trained on SAP Sales Cloud purchase history and Emarsys behavioral signals — surfaced as real-time API to sales reps within CRM, increasing wallet share per account.')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name">Cross-Sell &amp; Upsell Propensity Agent</div><div class="cap-pitch">Surfaces real-time next-best-offer recommendations to reps using purchase history and product affinity patterns.</div><div class="cap-tags"><span class="ctag tr">Revenue</span><span class="ctag tmr">CLV</span></div></div>
+      </div>
+    </div>
+
+    <!-- CMO -->
+    <div class="cpanel" id="cxo-cmo">
+      <div class="cxo-banner" style="border-left:4px solid var(--c2);"><div class="cxo-ico" style="background:var(--c2l);">📣</div><div><div class="cxo-tt">SAP &amp; AI&D for CMO <span style="font-size:14px;font-weight:400;color:var(--t3);">— Chief Marketing Officer</span></div><div class="cxo-sub">Demand generation · Brand intelligence · Marketing ROI optimization</div></div></div>
+      <div class="vstmt"><div class="vstmt-lbl">Value Statement</div><div class="vstmt-txt">"Build brand equity, generate demand, and create enduring customer relationships that drive revenue and competitive differentiation — with AI that predicts intent and personalizes at machine speed."</div></div>
+      <div class="sh-eye" style="margin-bottom:10px;">Five Signature Outcomes</div>
+      <div class="out5">
+        <div class="oc" style="--oc-col:var(--c2)"><div class="oc-n">01</div><div class="oc-t">Pipeline Fueled</div><div class="oc-d">Increase qualified pipeline and marketing-sourced revenue.</div></div>
+        <div class="oc" style="--oc-col:var(--c1)"><div class="oc-n">02</div><div class="oc-t">Brand Elevated</div><div class="oc-d">Improve brand NPS and market perception.</div></div>
+        <div class="oc" style="--oc-col:var(--c4)"><div class="oc-n">03</div><div class="oc-t">CAC Slashed</div><div class="oc-d">Reduce acquisition cost via optimized channel mix.</div></div>
+        <div class="oc" style="--oc-col:var(--c5)"><div class="oc-n">04</div><div class="oc-t">Adoption Accelerated</div><div class="oc-d">Drive product adoption and category leadership.</div></div>
+        <div class="oc" style="--oc-col:var(--c3)"><div class="oc-n">05</div><div class="oc-t">Markets Expanded</div><div class="oc-d">Enter new markets and segments with data precision.</div></div>
+      </div>
+      <div class="sh-eye" style="margin-top:22px;margin-bottom:10px;">AI Capabilities Stack</div>
+      <div class="cap-grid">
+        <div class="cap-card" onclick="showModal('AI Customer Segmentation & Persona Model','Builds hyper-precise, dynamic customer segments from unified SAP Emarsys behavioral and SAP Customer Data Platform transactional data — refreshed in real-time to fuel personalization engines at scale.')"><span class="cap-type t-model">Predictive Model</span><div class="cap-name">AI Customer Segmentation &amp; Persona Model</div><div class="cap-pitch">Fuels personalization at scale by building hyper-precise, dynamic segments from unified behavioral and transactional data.</div><div class="cap-tags"><span class="ctag tr">Revenue</span><span class="ctag tmr">CLV</span></div></div>
+        <div class="cap-card" onclick="showModal('Omnichannel Attribution Intelligence','AI-powered multi-touch attribution trained on SAP Emarsys campaign data and SAP Analytics Cloud revenue signals — revealing true CAC and eliminating dark spend across all marketing channels.')"><span class="cap-type t-intel">Intelligence</span><div class="cap-name">Omnichannel Attribution Intelligence</div><div class="cap-pitch">Reveals true CAC and eliminates dark spend by attributing revenue to campaigns with AI-powered multi-touch models.</div><div class="cap-tags"><span class="ctag tc">Operating Cost</span><span class="ctag tr">Revenue</span></div></div>
+        <div class="cap-card" onclick="showModal('Next Best Action Marketing Agent','Autonomously triggers personalized offers at the right moment by predicting customer intent from SAP Customer Data Cloud real-time behavioral signals — zero-latency decisioning across all touchpoints.')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name">Next Best Action Marketing Agent</div><div class="cap-pitch">Autonomously triggers personalized offers at the right moment by predicting customer intent from real-time signals.</div><div class="cap-tags"><span class="ctag tr">Revenue</span><span class="ctag tmr">Market Reputation</span></div></div>
+        <div class="cap-card" onclick="showModal('Brand Sentiment & VoC Model','Aggregates and analyzes customer feedback, reviews, and NPS data from SAP Qualtrics using NLP models on Azure AI Core — surfaces sentiment trends and emerging brand risk signals in real time.')"><span class="cap-type t-model">Predictive Model</span><div class="cap-name">Brand Sentiment &amp; VoC Model</div><div class="cap-pitch">Surfaces emerging brand risk and sentiment trends by analyzing NPS and customer feedback at scale.</div><div class="cap-tags"><span class="ctag tmr">Market Reputation</span><span class="ctag tsc">Stakeholder Confidence</span></div></div>
+        <div class="cap-card" onclick="showModal('Marketing Mix Optimization Agent','Continuously rebalances marketing budget allocation across channels using predictive ROI models on SAP Analytics Cloud and Datasphere — maximizing revenue output per marketing dollar spent.')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name">Marketing Mix Optimization Agent</div><div class="cap-pitch">Maximizes revenue output per marketing dollar by continuously rebalancing budget allocation using predictive ROI models.</div><div class="cap-tags"><span class="ctag tc">Operating Cost</span><span class="ctag tr">Revenue</span></div></div>
+      </div>
+    </div>
+
+    <!-- SCM -->
+    <div class="cpanel" id="cxo-scm">
+      <div class="cxo-banner" style="border-left:4px solid var(--c1);"><div class="cxo-ico" style="background:var(--c1l);">🔗</div><div><div class="cxo-tt">SAP &amp; AI&D for Supply Chain <span style="font-size:14px;font-weight:400;color:var(--t3);">— Head of Supply Chain</span></div><div class="cxo-sub">High ROI · Fast adoption · Outcome-based pricing on inventory &amp; OTIF</div></div></div>
+      <div class="vstmt"><div class="vstmt-lbl">Value Statement</div><div class="vstmt-txt">"Transform strategy into flawless execution by building a resilient, intelligent supply chain that delivers at optimal cost, speed, and quality — with agentic AI that senses, plans, and acts autonomously."</div></div>
+      <div class="sh-eye" style="margin-bottom:10px;">Five Signature Outcomes</div>
+      <div class="out5">
+        <div class="oc" style="--oc-col:var(--c1)"><div class="oc-n">01</div><div class="oc-t">Cost Eliminated</div><div class="oc-d">Reduce end-to-end operating costs and waste.</div></div>
+        <div class="oc" style="--oc-col:var(--c4)"><div class="oc-n">02</div><div class="oc-t">Delivery Perfected</div><div class="oc-d">Improve OTD, SLA performance, and fulfillment quality.</div></div>
+        <div class="oc" style="--oc-col:var(--c3)"><div class="oc-n">03</div><div class="oc-t">Disruption Absorbed</div><div class="oc-d">Drive supply chain resilience against global volatility.</div></div>
+        <div class="oc" style="--oc-col:var(--c5)"><div class="oc-n">04</div><div class="oc-t">Inventory Optimized</div><div class="oc-d">Eliminate overstock and stockout simultaneously.</div></div>
+        <div class="oc" style="--oc-col:var(--c2)"><div class="oc-n">05</div><div class="oc-t">Suppliers Mastered</div><div class="oc-d">Vendor risk scored, performance tracked, actions triggered.</div></div>
+      </div>
+      <div class="sh-eye" style="margin-top:22px;margin-bottom:10px;">AI Capabilities Stack</div>
+      <div class="cap-grid">
+        <div class="cap-card" style="border-color:rgba(0,87,184,.2);" onclick="window.open('https://www.figma.com/proto/R0FF6KU0KCEzH6BmA4YKNw/Enterprise-Analytics?page-id=2002%3A27767&node-id=2070-62976&viewport=108%2C196%2C0.32&t=eOsxNCZirkpffvXM-1&scaling=contain&content-scaling=fixed','_blank')"><span class="cap-type t-intel">Command Center</span><div class="cap-name" style="color:var(--c1);">Intelligent Warehouse Command Center 🔗</div><div class="cap-pitch">AI-powered control tower — dynamic safety stock, replenishment triggers, and fulfillment optimization. Live at ExxonMobil. Launched at SAP Sapphire 2026.</div><div class="cap-tags"><span class="ctag tc">Operating Cost</span><span class="ctag tbl">Balance Sheet</span></div></div>
+        <div class="cap-card" onclick="showModal('Demand Sensing & Forecasting Agent','Short-horizon demand forecast blending SAP IBP historical data with real-time signals. Ensemble ML achieves 20–35% lower forecast error vs baseline statistical models — deployed via Databricks Feature Store.')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name">Demand Sensing &amp; Forecasting Agent</div><div class="cap-pitch">Reduces demand forecast error by 20–35% blending SAP IBP data with real-time market signals.</div><div class="cap-tags"><span class="ctag tc">Operating Cost</span><span class="ctag tr">Revenue</span></div></div>
+        <div class="cap-card" style="border-color:rgba(0,87,184,.2);" onclick="window.open('https://curious-bunny-eacaab.netlify.app/otc-risk-dashboard#','_blank')"><span class="cap-type t-model">Predictive Model</span><div class="cap-name" style="color:var(--c1);">Supply Chain Risk Intelligence Model 🔗</div><div class="cap-pitch">Prevents disruptions by scoring supplier and logistics risk using SAP Ariba network data, financial health, and geopolitical intelligence.</div><div class="cap-tags"><span class="ctag tsc">Customer Satisfaction</span><span class="ctag trk">Risk</span></div></div>
+        <div class="cap-card" onclick="showModal('Supplier Performance Monitoring Agent','Continuous supplier health scoring across SAP Ariba and SQM data — automated alerts for delivery failures, quality deviations, and compliance gaps with AI-triggered corrective action workflow routing.')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name">Supplier Performance Monitoring Agent</div><div class="cap-pitch">Continuously scores vendors on quality, delivery, and compliance — automating alerts and corrective action workflows.</div><div class="cap-tags"><span class="ctag trk">Risk</span><span class="ctag tc">Operating Cost</span></div></div>
+        <div class="cap-card" onclick="showModal('Logistics Cost & Route Optimization Agent','Real-time carrier, mode, and route selection on SAP TM data — optimizes simultaneously against freight cost, carbon footprint, and delivery SLA constraints. Delivers 8–15% freight cost reduction.')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name">Logistics Cost &amp; Route Optimization Agent</div><div class="cap-pitch">Cuts freight spend by selecting optimal carriers, modes, and routes in real time against cost and carbon constraints.</div><div class="cap-tags"><span class="ctag tc">Operating Cost</span><span class="ctag tmr">Market Reputation</span></div></div>
+      </div>
+    </div>
+
+    <!-- CHRO -->
+    <div class="cpanel" id="cxo-chro">
+      <div class="cxo-banner" style="border-left:4px solid var(--c2);"><div class="cxo-ico" style="background:var(--c2l);">🤝</div><div><div class="cxo-tt">SAP &amp; AI&D for CHRO <span style="font-size:14px;font-weight:400;color:var(--t3);">— Chief Human Resources Officer</span></div><div class="cxo-sub">Emerging · High stickiness · Talent as competitive advantage</div></div></div>
+      <div class="vstmt"><div class="vstmt-lbl">Value Statement</div><div class="vstmt-txt">"Attract, develop, and retain world-class talent while building the culture and organizational capability to execute strategy — using AI to predict, personalize, and act on people decisions at scale."</div></div>
+      <div class="sh-eye" style="margin-bottom:10px;">Five Signature Outcomes</div>
+      <div class="out5">
+        <div class="oc" style="--oc-col:var(--c2)"><div class="oc-n">01</div><div class="oc-t">Attrition Halted</div><div class="oc-d">Reduce regrettable attrition and talent acquisition cost.</div></div>
+        <div class="oc" style="--oc-col:var(--c4)"><div class="oc-n">02</div><div class="oc-t">Productivity Unlocked</div><div class="oc-d">Increase workforce output and performance quality.</div></div>
+        <div class="oc" style="--oc-col:var(--c1)"><div class="oc-n">03</div><div class="oc-t">Pipeline Built</div><div class="oc-d">Build leadership depth and succession confidence.</div></div>
+        <div class="oc" style="--oc-col:var(--c5)"><div class="oc-n">04</div><div class="oc-t">Engagement Elevated</div><div class="oc-d">Improve eNPS, culture, and DEI positioning.</div></div>
+        <div class="oc" style="--oc-col:var(--c3)"><div class="oc-n">05</div><div class="oc-t">Skills Future-Proofed</div><div class="oc-d">Close capability gaps before they become liabilities.</div></div>
+      </div>
+      <div class="sh-eye" style="margin-top:22px;margin-bottom:10px;">AI Capabilities Stack</div>
+      <div class="cap-grid">
+        <div class="cap-card" style="border-color:rgba(91,33,182,.2);" onclick="window.open('https://www.figma.com/proto/R0FF6KU0KCEzH6BmA4YKNw/Enterprise-Analytics?page-id=2002%3A27767&node-id=2079-18581&viewport=108%2C196%2C0.32&t=eOsxNCZirkpffvXM-1&scaling=contain&content-scaling=fixed','_blank')"><span class="cap-type t-intel">Command Center</span><div class="cap-name" style="color:var(--c2);">HR &amp; Talent Intelligence Hub 🔗</div><div class="cap-pitch">Guides org design and workforce planning by surfacing productivity gaps, performance outliers, and talent risks from SAP SuccessFactors HCM data.</div><div class="cap-tags"><span class="ctag ttl">Talent</span><span class="ctag tc">Operating Cost</span></div></div>
+        <div class="cap-card" onclick="showModal('Talent Attrition Prediction Model','Predicts flight-risk employees 60–90 days in advance using SAP SuccessFactors engagement, performance, and career trajectory signals — enabling proactive, targeted retention interventions before resignation.')"><span class="cap-type t-model">Predictive Model</span><div class="cap-name">Talent Attrition Prediction Model</div><div class="cap-pitch">Predicts flight-risk employees 60–90 days in advance using SAP SuccessFactors engagement and performance signals.</div><div class="cap-tags"><span class="ctag ttl">Talent</span><span class="ctag tc">Operating Cost</span></div></div>
+        <div class="cap-card" onclick="showModal('Intelligent Talent Acquisition Agent','End-to-end autonomous hiring workflow — AI-matched candidate scoring against SAP HCM competency frameworks, automated interview scheduling, and bias-reduced shortlisting. Reduces time-to-hire by 40%.')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name">Intelligent Talent Acquisition Agent</div><div class="cap-pitch">Reduces time and cost to hire by automating candidate screening, ranking, and scheduling against SAP HCM frameworks.</div><div class="cap-tags"><span class="ctag ttl">Talent</span><span class="ctag tc">Operating Cost</span></div></div>
+        <div class="cap-card" onclick="showModal('Skills Gap & Learning Recommendation Agent','Maps workforce skills from SAP SuccessFactors against future strategic capability requirements using the SAP Skill Graph — auto-assigns personalized learning paths via SAP LMS with built-in progress tracking.')"><span class="cap-type t-agent">AI Agent</span><div class="cap-name">Skills Gap &amp; Learning Agent</div><div class="cap-pitch">Closes critical capability gaps by auto-assigning personalized learning paths mapped to future business needs via SAP LMS.</div><div class="cap-tags"><span class="ctag ttl">Talent</span><span class="ctag tmr">Market Reputation</span></div></div>
+        <div class="cap-card" onclick="showModal('Compensation Equity & Benchmarking Model','AI analysis of SAP SuccessFactors payroll and grade structures against live market benchmarks — detects pay equity gaps by gender, geography, and level. Reduces regrettable attrition linked to compensation dissatisfaction.')"><span class="cap-type t-model">Predictive Model</span><div class="cap-name">Compensation Equity &amp; Benchmarking</div><div class="cap-pitch">Detects pay equity gaps and benchmarks against live market rates to reduce turnover risk and strengthen employer brand.</div><div class="cap-tags"><span class="ctag ttl">Talent</span><span class="ctag tmr">Market Reputation</span><span class="ctag tsc">Stakeholder Confidence</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- OPERATING MODEL -->
+<section class="pg" id="opmodel">
+  <div class="wrap">
+    <div class="sh"><div class="sh-eye">Operating Model &amp; Delivery</div><div class="sh-h">7 Phases. <span class="cy">One Factory.</span> Infinite Scale.</div><div class="sh-s">From an initial concept to a $65M practice — a disciplined, repeatable build engine that turns AI ideas into deployed, revenue-generating enterprise products at speed.</div><div class="sh-line"></div></div>
+    <div class="oflow">
+      <div class="ofstep"><div class="of-node">💡</div><div class="of-n">PHASE 01</div><div class="of-t">Idea &amp; Case</div></div>
+      <div class="ofstep"><div class="of-node">🗺️</div><div class="of-n">PHASE 02</div><div class="of-t">Roadmap</div></div>
+      <div class="ofstep"><div class="of-node">💰</div><div class="of-n">PHASE 03</div><div class="of-t">Funding</div></div>
+      <div class="ofstep"><div class="of-node">🏗️</div><div class="of-n">PHASE 04</div><div class="of-t">Team &amp; Tech</div></div>
+      <div class="ofstep"><div class="of-node">⚡</div><div class="of-n">PHASE 05</div><div class="of-t">Build</div></div>
+      <div class="ofstep"><div class="of-node">🚀</div><div class="of-n">PHASE 06</div><div class="of-t">Launch</div></div>
+      <div class="ofstep"><div class="of-node">📈</div><div class="of-n">PHASE 07</div><div class="of-t">Scale &amp; Iterate</div></div>
+    </div>
+    <div class="div" style="margin:24px 0;"></div>
+    <div class="sh"><div class="sh-eye">Delivery Architecture</div><div class="sh-h">The <span class="cy">3-Layer Model</span></div></div>
+    <div class="layers">
+      <div class="layer ly-ey"><div class="layer-ico">🖥️</div><div class="layer-txt"><div class="lt">Experience Layer</div><div class="ls">AI Copilots · Command Centers · Dashboards · CXO Reporting Surfaces</div></div><div class="layer-badge lb-ey">User-facing</div></div>
+      <div style="text-align:center;font-size:11px;color:var(--t3);margin:3px 0;font-family:var(--fm);">↕ REST APIs · Event streams · WebSockets</div>
+      <div class="layer ly-pl"><div class="layer-ico">⚡</div><div class="layer-txt"><div class="lt">Edge Platform — AI + Data</div><div class="ls">Databricks Lakehouse · Azure OpenAI · ML model registry · Feature store · CI/CD pipelines</div></div><div class="layer-badge lb-pl">Intelligence</div></div>
+      <div style="text-align:center;font-size:11px;color:var(--t3);margin:3px 0;font-family:var(--fm);">↕ SAP connectors · BTP integration suite · Semantic data layer</div>
+      <div class="layer ly-sap"><div class="layer-ico">🏗️</div><div class="layer-txt"><div class="lt">SAP Core — Untouched</div><div class="ls">SAP S/4HANA · SuccessFactors · Ariba · SAP IBP · SAP GRC — Clean &amp; Stable</div></div><div class="layer-badge lb-sap">Foundation</div></div>
+    </div>
+    <div class="div" style="margin:24px 0;"></div>
+    <div class="sh"><div class="sh-eye">AI Edge Factory</div><div class="sh-h">Domain <span class="cy">Pods</span> — CXO Aligned</div></div>
+    <div class="pods">
+      <div class="pod" style="border-top:3px solid var(--c4);"><div class="pod-t" style="color:var(--c4);">CFO Pod</div><div class="pod-r">Product Owner</div><div class="pod-r">AI Architect (SAP Finance)</div><div class="pod-r">SAP FICO Functional Expert</div><div class="pod-r">Data Engineer (Databricks)</div><div class="pod-r">Value Engineer (ROI storytelling)</div></div>
+      <div class="pod" style="border-top:3px solid var(--c3);"><div class="pod-t" style="color:var(--c3);">Audit Pod</div><div class="pod-r">Product Owner</div><div class="pod-r">AI Architect (GRC + Risk)</div><div class="pod-r">SAP GRC Functional Expert</div><div class="pod-r">Data Engineer (HANA ML)</div><div class="pod-r">Value Engineer (ROI storytelling)</div></div>
+      <div class="pod" style="border-top:3px solid var(--c1);"><div class="pod-t" style="color:var(--c1);">Supply Chain Pod</div><div class="pod-r">Product Owner</div><div class="pod-r">AI Architect (IBP + EWM)</div><div class="pod-r">SAP SCM Functional Expert</div><div class="pod-r">Data Engineer (Lakehouse)</div><div class="pod-r">Value Engineer (ROI storytelling)</div></div>
+      <div class="pod" style="border-top:3px solid var(--c2);"><div class="pod-t" style="color:var(--c2);">HR Pod</div><div class="pod-r">Product Owner</div><div class="pod-r">AI Architect (SuccessFactors)</div><div class="pod-r">SAP HCM Functional Expert</div><div class="pod-r">Data Engineer (Azure AI)</div><div class="pod-r">Value Engineer (ROI storytelling)</div></div>
+    </div>
+    <div class="div" style="margin:24px 0;"></div>
+    <div class="sh"><div class="sh-eye">Operating Cadence</div><div class="sh-h">Rhythm of <span class="cy">Accountability</span></div></div>
+    <div class="g3">
+      <div class="card"><div style="font-family:var(--fm);font-size:10px;color:var(--c1);margin-bottom:10px;font-weight:600;">WEEKLY</div><div class="fp-b">Pod sprint reviews &amp; velocity checks</div><div class="fp-b">Client pipeline sync</div><div class="fp-b">Forward deployment engineer standups</div></div>
+      <div class="card"><div style="font-family:var(--fm);font-size:10px;color:var(--c5);margin-bottom:10px;font-weight:600;">MONTHLY</div><div class="fp-b">Alliance sync (SAP · Microsoft · Databricks)</div><div class="fp-b">Asset maturity review</div><div class="fp-b">Reuse score tracking (target: 60–70%)</div></div>
+      <div class="card"><div style="font-family:var(--fm);font-size:10px;color:var(--c4);margin-bottom:10px;font-weight:600;">QUARTERLY</div><div class="fp-b">CXO solution commercial launches</div><div class="fp-b">Revenue tracking vs $65M north star</div><div class="fp-b">New CXO vertical expansion review</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATALOGUE -->
+<section class="pg" id="catalogue">
+  <div class="wrap">
+    <div class="sh"><div class="sh-eye">AI Asset Catalogue</div><div class="sh-h">30+ <span class="cy">Agents, Models &amp; Intelligence Layers</span></div><div class="sh-s">Every capability built on the SAP ecosystem, deployed on the AI Edge platform. Live assets link to working demos. Capabilities in development open a full preview on click.</div><div class="sh-line"></div></div>
+
+    <div class="cat-sh"><div class="cat-sh-ico">🔍</div><div><div class="cat-sh-t">SAP Value Discovery Engine</div><div class="cat-sh-s">Flagship · Phase 0 diagnostic · Live</div></div></div>
+    <div class="assets" style="grid-template-columns:1fr;">
+      <div class="ac has-link" style="--gc:var(--c1);" onclick="window.open('https://lemon-grass-085197a0f.7.azurestaticapps.net/','_blank')"><span class="ac-type" style="background:var(--c1l);color:var(--c1);border:1px solid rgba(0,87,184,.2);">Intelligence Engine</span><div class="ac-name">SAP Value Discovery Engine 🔗</div><div class="ac-desc">Transforms SAP ECC data into quantified insights and actionable transformation roadmaps — enabling faster, more credible S/4HANA Phase 0 diagnostics across O2C, P2P, and R2R in 7 weeks.</div><div class="ac-tags"><span class="ctag tr">Revenue</span><span class="ctag tc">Operating Cost</span><span class="ctag tsc">Stakeholder Confidence</span></div><div class="ac-ext">⚡ LIVE → lemon-grass-085197a0f.7.azurestaticapps.net</div></div>
+    </div>
+
+    <div class="cat-sh"><div class="cat-sh-ico">📊</div><div><div class="cat-sh-t">CFO — Chief Financial Officer</div><div class="cat-sh-s">Most mature · Anchor revenue · $2–5M per engagement</div></div></div>
+    <div class="assets">
+      <div class="ac has-link" style="--gc:var(--c4);" onclick="window.open('https://pv-fc-dev-ui.gentleriver-b38b5f4f.eastus2.azurecontainerapps.io/','_blank')"><span class="ac-type" style="background:var(--c4l);color:var(--c4);border:1px solid rgba(5,150,105,.2);">Command Center</span><div class="ac-name">Finance Command Center 🔗</div><div class="ac-desc">Single pane of glass for the CFO — real-time P&L, cash flow, anomaly alerts, and close status in one AI-powered operating surface.</div><div class="ac-tags"><span class="ctag tr">Revenue</span><span class="ctag tsc">Stakeholder Confidence</span></div><div class="ac-ext">⚡ LIVE DEMO AVAILABLE</div></div>
+      <div class="ac" style="--gc:var(--c5);" onclick="showModal('Intelligent Financial Close Agent','Autonomously orchestrates period-end close tasks, variance analysis, and journal approvals using AI workflows on SAP S/4HANA Finance and SAP Analytics Cloud — compressing close cycles by up to 40%.')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">Intelligent Financial Close Agent</div><div class="ac-desc">Compresses period-end close cycles by up to 40% through autonomous task orchestration and variance approvals.</div><div class="ac-tags"><span class="ctag tc">Operating Cost</span><span class="ctag tsc">Stakeholder Confidence</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+      <div class="ac" style="--gc:var(--c1);" onclick="showModal('Predictive Cash Flow & Liquidity Model','13-week rolling cash forecast model on SAP Treasury data using HANA ML. Autonomous scenario modeling surfaces liquidity gaps 90 days ahead — eliminating CFO cash surprises.')"><span class="ac-type t-model">Predictive Model</span><div class="ac-name">Predictive Cash Flow &amp; Liquidity Model</div><div class="ac-desc">Eliminates liquidity surprises with AI-driven 13-week rolling cash forecasts and scenario modeling.</div><div class="ac-tags"><span class="ctag tbl">Balance Sheet</span><span class="ctag tsc">Stakeholder Confidence</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+      <div class="ac" style="--gc:var(--c3);" onclick="showModal('Autonomous Spend Intelligence Agent','Continuous monitoring of SAP Ariba and S/4HANA data for maverick spend, duplicate invoices, and policy violations — autonomous flagging and workflow routing before financial posting.')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">Autonomous Spend Intelligence Agent</div><div class="ac-desc">Detects maverick spend, duplicate payments, and policy violations before they hit the ledger.</div><div class="ac-tags"><span class="ctag tc">Operating Cost</span><span class="ctag trk">Risk</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+      <div class="ac" style="--gc:var(--c2);" onclick="showModal('Margin & Profitability Attribution Model','ML model on SAP S/4HANA and BW/4HANA data to decompose P&L at product, customer, and channel level. Surfaces hidden margin diluters and recommends precision pricing adjustments.')"><span class="ac-type t-model">Predictive Model</span><div class="ac-name">Margin &amp; Profitability Attribution Model</div><div class="ac-desc">Surfaces hidden margin diluters at product, customer, and channel level to guide pricing decisions.</div><div class="ac-tags"><span class="ctag tr">Revenue</span><span class="ctag tc">Operating Cost</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+      <div class="ac" style="--gc:var(--c3);" onclick="showModal('Financial Anomaly & Fraud Detection Agent','Continuous AI surveillance on SAP Financial Compliance Management data — 100% GL entry monitoring for fraud patterns and payment anomalies with real-time explainable alert routing.')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">Financial Anomaly &amp; Fraud Detection Agent</div><div class="ac-desc">Runs continuous AI surveillance across GL entries and payment runs to flag fraud and anomalies in real time.</div><div class="ac-tags"><span class="ctag trk">Risk</span><span class="ctag tsc">Stakeholder Confidence</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+    </div>
+
+    <div class="cat-sh" style="border-left-color:var(--c3);"><div class="cat-sh-ico">🛡️</div><div><div class="cat-sh-t">CAE — Chief Audit Executive</div><div class="cat-sh-s">High margin · Differentiated · Recurring compliance platform</div></div></div>
+    <div class="assets">
+      <div class="ac has-link" style="--gc:var(--c3);" onclick="window.open('https://www.figma.com/proto/R0FF6KU0KCEzH6BmA4YKNw/Enterprise-Analytics?page-id=2002%3A27767&node-id=2110-179250&viewport=108%2C196%2C0.32&t=eOsxNCZirkpffvXM-1&scaling=contain&content-scaling=fixed','_blank')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">EY.ai for Risk Intelligence 🔗</div><div class="ac-desc">Replaces sample-based audits with 24/7 automated controls testing across 100% of SAP transactions — flagship continuous audit capability.</div><div class="ac-tags"><span class="ctag trk">Risk</span><span class="ctag tsc">Stakeholder Confidence</span></div><div class="ac-ext">⚡ LIVE DEMO AVAILABLE</div></div>
+      <div class="ac has-link" style="--gc:var(--c5);" onclick="window.open('https://eycatalyst.azurewebsites.net/mockup?inspirationId=df318dce-2e64-471c-b0a2-6ee625337b50','_blank')"><span class="ac-type t-model">Predictive Model</span><div class="ac-name">Dynamic Risk Assessment (DRA) 🔗</div><div class="ac-desc">Dynamically ranks the enterprise risk universe so audit teams focus on highest-impact areas — AI-powered prioritization at scale.</div><div class="ac-tags"><span class="ctag trk">Risk</span><span class="ctag tc">Operating Cost</span></div><div class="ac-ext">⚡ LIVE — EY CATALYST PLATFORM</div></div>
+      <div class="ac has-link" style="--gc:var(--c1);" onclick="window.open('https://abxgta.github.io/Risk_Manual_Upload/','_blank')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">Audit Trail Intelligence Agent 🔗</div><div class="ac-desc">Detects SoD violations and insider anomalies by reconstructing full SAP transaction lineage automatically across all modules.</div><div class="ac-tags"><span class="ctag trk">Risk</span><span class="ctag tc">Operations Audit</span></div><div class="ac-ext">⚡ LIVE DEMO AVAILABLE</div></div>
+      <div class="ac has-link" style="--gc:var(--c2);" onclick="window.open('https://abxgta.github.io/Risk/','_blank')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">Audit Committee Prep Agent 🔗</div><div class="ac-desc">Maintains the quarterly Audit Committee calendar and autonomously prepares board-ready risk summaries and control attestations.</div><div class="ac-tags"><span class="ctag tsc">Stakeholder Confidence</span><span class="ctag trk">Risk</span></div><div class="ac-ext">⚡ LIVE DEMO AVAILABLE</div></div>
+      <div class="ac has-link" style="--gc:var(--c4);" onclick="window.open('https://abxgta.github.io/Risk2_External_Event/','_blank')"><span class="ac-type t-intel">Intelligence</span><div class="ac-name">End-to-End Touchless Audit 🔗</div><div class="ac-desc">Fully autonomous audit pipeline triggered by internal or external events — from signal detection through investigation to board-ready report.</div><div class="ac-tags"><span class="ctag trk">Risk</span><span class="ctag tc">Touchless Audit</span></div><div class="ac-ext">⚡ LIVE DEMO AVAILABLE</div></div>
+    </div>
+
+    <div class="cat-sh" style="border-left-color:var(--c3);"><div class="cat-sh-ico">📈</div><div><div class="cat-sh-t">CRO — Chief Revenue Officer</div><div class="cat-sh-s">Revenue acceleration · Pipeline intelligence · Customer lifetime value</div></div></div>
+    <div class="assets">
+      <div class="ac has-link" style="--gc:var(--c4);" onclick="window.open('https://www.figma.com/proto/R0FF6KU0KCEzH6BmA4YKNw/Enterprise-Analytics?page-id=2002%3A27767&node-id=2079-64620&viewport=108%2C196%2C0.32&t=eOsxNCZirkpffvXM-1&scaling=contain&content-scaling=fixed','_blank')"><span class="ac-type" style="background:var(--c4l);color:var(--c4);border:1px solid rgba(5,150,105,.2);">Command Center</span><div class="ac-name">Revenue Command Center 🔗</div><div class="ac-desc">Single pane of glass for the CRO — pipeline health, forecast accuracy, deal velocity, and customer profitability in one AI-powered dashboard.</div><div class="ac-tags"><span class="ctag tr">Revenue</span><span class="ctag tsc">Stakeholder Confidence</span></div><div class="ac-ext">⚡ LIVE DEMO AVAILABLE</div></div>
+      <div class="ac" style="--gc:var(--c1);" onclick="showModal('Revenue Forecasting & Signal Agent','AI-calibrated forecast engine synthesizing SAP C4C pipeline, SD order history, and external market signals via ensemble ML — reducing forecast error by 30%.')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">Revenue Forecasting &amp; Signal Agent</div><div class="ac-desc">Reduces revenue forecast error by up to 30% by synthesizing pipeline, order history, and real-time market signals.</div><div class="ac-tags"><span class="ctag tr">Revenue</span><span class="ctag tsc">Stakeholder Confidence</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+      <div class="ac" style="--gc:var(--c5);" onclick="showModal('Price & Margin Optimization Model','Real-time deal pricing recommendation API — analyzes customer WTP, competitive signals, and margin floors from SAP SD and CPQ data. Surfaced directly in CRM for reps at point of quoting.')"><span class="ac-type t-model">Predictive Model</span><div class="ac-name">Price &amp; Margin Optimization Model</div><div class="ac-desc">Recommends optimal deal-level pricing using customer willingness-to-pay and margin threshold analysis.</div><div class="ac-tags"><span class="ctag tr">Revenue</span><span class="ctag tc">Operating Cost</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+      <div class="ac" style="--gc:var(--c3);" onclick="showModal('Contract Revenue Leakage Agent','AI-driven reconciliation across SAP CLM and S/4HANA billing — detects billing gaps, unenforced contract terms, and missed SLA penalties in real time.')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">Contract Revenue Leakage Agent</div><div class="ac-desc">Recovers lost revenue by identifying billing gaps, unenforced contract terms, and missed SLA penalties.</div><div class="ac-tags"><span class="ctag tr">Revenue</span><span class="ctag trk">Risk</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+      <div class="ac" style="--gc:var(--c2);" onclick="showModal('Cross-Sell & Upsell Propensity Agent','Next-best-offer recommendation engine trained on SAP Sales Cloud purchase history and Emarsys behavioral signals — surfaced as real-time API to sales reps within CRM, increasing wallet share per account.')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">Cross-Sell &amp; Upsell Propensity Agent</div><div class="ac-desc">Surfaces real-time next-best-offer recommendations using SAP purchase history and product affinity models.</div><div class="ac-tags"><span class="ctag tr">Revenue</span><span class="ctag tmr">CLV</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+    </div>
+
+    <div class="cat-sh" style="border-left-color:var(--c1);"><div class="cat-sh-ico">🔗</div><div><div class="cat-sh-t">Head of Supply Chain</div><div class="cat-sh-s">High ROI · Fast time-to-value · Outcome-based pricing model</div></div></div>
+    <div class="assets">
+      <div class="ac has-link" style="--gc:var(--c1);" onclick="window.open('https://www.figma.com/proto/R0FF6KU0KCEzH6BmA4YKNw/Enterprise-Analytics?page-id=2002%3A27767&node-id=2070-62976&viewport=108%2C196%2C0.32&t=eOsxNCZirkpffvXM-1&scaling=contain&content-scaling=fixed','_blank')"><span class="ac-type" style="background:var(--c1l);color:var(--c1);border:1px solid rgba(0,87,184,.2);">Command Center</span><div class="ac-name">Intelligent Warehouse Command Center 🔗</div><div class="ac-desc">AI-powered warehouse and inventory control tower. Dynamic safety stock, replenishment triggers, and fulfillment optimization. Launched at SAP Sapphire 2026.</div><div class="ac-tags"><span class="ctag tc">Operating Cost</span><span class="ctag tbl">Balance Sheet</span></div><div class="ac-ext">⚡ LIVE — SAP SAPPHIRE 2026</div></div>
+      <div class="ac" style="--gc:var(--c4);" onclick="showModal('Demand Sensing & Forecasting Agent','Short-horizon demand forecast blending SAP IBP historical data with real-time signals. Ensemble ML achieves 20–35% lower forecast error vs baseline statistical models.')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">Demand Sensing &amp; Forecasting Agent</div><div class="ac-desc">Reduces demand forecast error by 20–35% using SAP IBP data blended with real-time market signals.</div><div class="ac-tags"><span class="ctag tc">Operating Cost</span><span class="ctag tr">Revenue</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+      <div class="ac has-link" style="--gc:var(--c3);" onclick="window.open('https://curious-bunny-eacaab.netlify.app/otc-risk-dashboard#','_blank')"><span class="ac-type t-model">Predictive Model</span><div class="ac-name">Supply Chain Risk Intelligence Model 🔗</div><div class="ac-desc">Real-time supplier and logistics risk scoring using SAP Ariba network data, financial health, and geopolitical intelligence.</div><div class="ac-tags"><span class="ctag tsc">Customer Satisfaction</span><span class="ctag trk">Risk</span></div><div class="ac-ext">⚡ LIVE DEMO AVAILABLE</div></div>
+      <div class="ac" style="--gc:var(--c5);" onclick="showModal('Supplier Performance Monitoring Agent','Continuous supplier health scoring across SAP Ariba and SQM — automated alerts for delivery failures, quality deviations, and compliance gaps with AI-triggered corrective action routing.')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">Supplier Performance Monitoring Agent</div><div class="ac-desc">Continuously scores vendors on quality, delivery, and compliance — automating alerts and corrective action workflows.</div><div class="ac-tags"><span class="ctag trk">Risk</span><span class="ctag tc">Operating Cost</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+      <div class="ac" style="--gc:var(--c2);" onclick="showModal('Logistics Cost & Route Optimization Agent','Real-time carrier, mode, and route selection on SAP TM data — optimizes against freight cost, carbon footprint, and delivery SLA constraints. Delivers 8–15% freight cost reduction.')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">Logistics Cost &amp; Route Optimization Agent</div><div class="ac-desc">Cuts freight spend by selecting optimal carriers, modes, and routes in real time against cost and carbon constraints.</div><div class="ac-tags"><span class="ctag tc">Operating Cost</span><span class="ctag tmr">Market Reputation</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+    </div>
+
+    <div class="cat-sh" style="border-left-color:var(--c2);"><div class="cat-sh-ico">🤝</div><div><div class="cat-sh-t">CHRO — Chief Human Resources Officer</div><div class="cat-sh-s">Emerging · High stickiness · People as competitive advantage</div></div></div>
+    <div class="assets">
+      <div class="ac has-link" style="--gc:var(--c2);" onclick="window.open('https://www.figma.com/proto/R0FF6KU0KCEzH6BmA4YKNw/Enterprise-Analytics?page-id=2002%3A27767&node-id=2079-18581&viewport=108%2C196%2C0.32&t=eOsxNCZirkpffvXM-1&scaling=contain&content-scaling=fixed','_blank')"><span class="ac-type" style="background:var(--c2l);color:var(--c2);border:1px solid rgba(91,33,182,.2);">Command Center</span><div class="ac-name">HR &amp; Talent Intelligence Hub 🔗</div><div class="ac-desc">Workforce planning command center — productivity gaps, attrition risk, skills heat maps, and performance outliers from SAP SuccessFactors HCM in one AI-powered view.</div><div class="ac-tags"><span class="ctag ttl">Talent</span><span class="ctag tc">Operating Cost</span></div><div class="ac-ext">⚡ LIVE DEMO AVAILABLE</div></div>
+      <div class="ac" style="--gc:var(--c3);" onclick="showModal('Talent Attrition Prediction Model','60–90 day flight-risk prediction using SAP SuccessFactors engagement, performance, and career trajectory signals. Enables CHROs to deploy targeted retention interventions before the resignation letter arrives.')"><span class="ac-type t-model">Predictive Model</span><div class="ac-name">Talent Attrition Prediction Model</div><div class="ac-desc">Predicts flight-risk employees 60–90 days in advance using SAP SuccessFactors engagement and performance signals.</div><div class="ac-tags"><span class="ctag ttl">Talent</span><span class="ctag tc">Operating Cost</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+      <div class="ac" style="--gc:var(--c1);" onclick="showModal('Intelligent Talent Acquisition Agent','End-to-end autonomous hiring workflow — AI-matched candidate scoring against SAP HCM competency frameworks, automated interview scheduling, and bias-reduced shortlisting. Reduces time-to-hire by 40%.')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">Intelligent Talent Acquisition Agent</div><div class="ac-desc">Reduces time and cost to hire by automating candidate screening, ranking, and scheduling against SAP HCM frameworks.</div><div class="ac-tags"><span class="ctag ttl">Talent</span><span class="ctag tc">Operating Cost</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+      <div class="ac" style="--gc:var(--c4);" onclick="showModal('Skills Gap & Learning Recommendation Agent','Maps workforce skills from SAP SuccessFactors against future strategic capability requirements using the SAP Skill Graph — auto-assigns personalized learning paths via SAP LMS with progress tracking.')"><span class="ac-type t-agent">AI Agent</span><div class="ac-name">Skills Gap &amp; Learning Agent</div><div class="ac-desc">Closes critical capability gaps by auto-assigning personalized learning paths mapped to future business needs via SAP LMS.</div><div class="ac-tags"><span class="ctag ttl">Talent</span><span class="ctag tmr">Market Reputation</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+      <div class="ac" style="--gc:var(--c5);" onclick="showModal('Compensation Equity & Benchmarking Model','AI analysis of SAP SuccessFactors payroll and grade structures against live market benchmarks — detects pay equity gaps by gender, geography, and level. Reduces regrettable attrition linked to compensation dissatisfaction.')"><span class="ac-type t-model">Predictive Model</span><div class="ac-name">Compensation Equity &amp; Benchmarking Model</div><div class="ac-desc">Detects pay equity gaps and benchmarks against live market rates to reduce turnover risk and strengthen employer brand.</div><div class="ac-tags"><span class="ctag ttl">Talent</span><span class="ctag tmr">Market Reputation</span><span class="ctag tsc">Stakeholder Confidence</span></div><div class="ac-ext">🔒 IN DEVELOPMENT</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SUCCESS STORIES -->
+<section class="pg" id="success">
+  <div class="wrap">
+    <div class="sh"><div class="sh-eye">AI Capability Success Stories</div><div class="sh-h">From <span class="cy">Idea to Enterprise Impact.</span> Proven.</div><div class="sh-s">Two capabilities have completed the full journey — from initial concept through funding, build, and enterprise deployment. Here is the evidence that the SAP &amp; AI&D Innovation Hub model works.</div><div class="sh-line"></div></div>
+
+    <div class="ss-card" style="border-top:4px solid var(--c1);">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <div><div class="sh-eye" style="margin-bottom:4px;">Story 01 · Audit Intelligence</div><div class="ss-h">EY.AI for Risk Intelligence</div><div class="ss-sub">Continuous Controls Monitoring · 100% SAP Transaction Coverage · Enterprise Audit Platform</div></div>
+        <div><div class="badge-fund">💰 $1.7M Secured · Ready to Launch</div></div>
+      </div>
+      <div class="journey">
+        <div class="jstep"><div class="jbox done"><span class="ck">✓</span>Idea &amp; Case</div></div><div class="jcon done"></div>
+        <div class="jstep"><div class="jbox done"><span class="ck">✓</span>Roadmap</div></div><div class="jcon done"></div>
+        <div class="jstep"><div class="jbox done"><span class="ck">✓</span>Funding<br><span style="font-size:9px;">$1.7M</span></div></div><div class="jcon done"></div>
+        <div class="jstep"><div class="jbox done"><span class="ck">✓</span>Team &amp; Tech</div></div><div class="jcon done"></div>
+        <div class="jstep"><div class="jbox done"><span class="ck">✓</span>Build</div></div><div class="jcon rdy"></div>
+        <div class="jstep"><div class="jbox rdy">⚡ Launch<br><span style="font-size:9px;">READY NOW</span></div></div><div class="jcon"></div>
+        <div class="jstep"><div class="jbox pend">Scale &amp; Iterate</div></div>
+      </div>
+      <div style="margin:16px 0;"><div style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-family:var(--fm);">Target Launch Clients</div>
+        <div class="logos-row"><div class="clogo">Johnson Controls</div><div class="clogo">GE Vernova</div><div class="clogo">Goodyear</div></div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;"><a href="https://www.figma.com/proto/dLzJxmQD8Jt9lZu0q8CJLb/Risk.AI-Analytics?node-id=278566-1668&viewport=1067%2C250%2C0.39&t=IreEwSKMJtetjUsp-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=278566%3A1668&page-id=278565%3A1114" target="_blank"><button class="btn-p">View Live Demo →</button></a><div style="font-size:12.5px;color:var(--t3);">Replaces sample-based audits · 24/7 continuous monitoring · 100% SAP transaction coverage</div></div>
+    </div>
+
+    <div class="ss-card" style="border-top:4px solid var(--c4);">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <div><div class="sh-eye" style="margin-bottom:4px;color:var(--c4);">Story 02 · Supply Chain Intelligence</div><div class="ss-h">EWM — Enterprise Warehouse Management Intelligence</div><div class="ss-sub">Intelligent Warehouse Command Center · AI-Powered Inventory Optimization · Live at ExxonMobil</div></div>
+        <div><div class="badge-fund">✅ Funded · Built · Deployed · Live</div><div class="badge-sapph">🏆 SAP Sapphire 2026 Launch</div></div>
+      </div>
+      <div class="journey">
+        <div class="jstep"><div class="jbox done"><span class="ck">✓</span>Idea &amp; Case</div></div><div class="jcon done"></div>
+        <div class="jstep"><div class="jbox done"><span class="ck">✓</span>Roadmap</div></div><div class="jcon done"></div>
+        <div class="jstep"><div class="jbox done"><span class="ck">✓</span>Funding</div></div><div class="jcon done"></div>
+        <div class="jstep"><div class="jbox done"><span class="ck">✓</span>Team &amp; Tech</div></div><div class="jcon done"></div>
+        <div class="jstep"><div class="jbox done"><span class="ck">✓</span>Build</div></div><div class="jcon done"></div>
+        <div class="jstep"><div class="jbox done"><span class="ck">✓</span>Launch<br><span style="font-size:9px;">SAP Sapphire</span></div></div><div class="jcon done"></div>
+        <div class="jstep"><div class="jbox done" style="animation:none;"><span class="ck">✓</span>Scale &amp; Iterate</div></div>
+      </div>
+      <div style="margin:16px 0;"><div style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-family:var(--fm);">Live Enterprise Deployment</div>
+        <div class="logos-row"><div class="clogo ey-green">ExxonMobil ✓ Deployed</div><div class="clogo" style="border-color:rgba(0,87,184,.25);color:var(--c1);background:var(--c1l);">SAP Sapphire 2026 ✓ Showcased</div></div>
+      </div>
+      <div style="background:var(--c4l);border:1px solid rgba(5,150,105,.2);border-radius:10px;padding:16px 20px;margin:14px 0;">
+        <div style="font-size:11px;font-weight:700;color:var(--c4);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;font-family:var(--fm);">Proven Outcomes at ExxonMobil</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
+          <div><div style="font-family:var(--ff);font-size:30px;font-weight:700;color:var(--c4);">23%</div><div style="font-size:11.5px;color:var(--t3);">Inventory Reduction</div></div>
+          <div><div style="font-family:var(--ff);font-size:30px;font-weight:700;color:var(--c4);">97%</div><div style="font-size:11.5px;color:var(--t3);">OTIF Achievement</div></div>
+          <div><div style="font-family:var(--ff);font-size:30px;font-weight:700;color:var(--c4);">40%</div><div style="font-size:11.5px;color:var(--t3);">Faster Replenishment</div></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;"><a href="https://www.figma.com/proto/R0FF6KU0KCEzH6BmA4YKNw/Enterprise-Analytics?page-id=2002%3A27767&node-id=2070-62976&viewport=108%2C196%2C0.32&t=eOsxNCZirkpffvXM-1&scaling=contain&content-scaling=fixed" target="_blank"><button class="btn-p" style="background:var(--c4);">View Live Platform →</button></a><div style="font-size:12.5px;color:var(--t3);">AI-powered inventory optimization · SAP EWM native integration · Launched SAP Sapphire 2026</div></div>
+    </div>
+
+    <div class="div" style="margin:24px 0;"></div>
+    <div class="sh"><div class="sh-eye">What's Next</div><div class="sh-h">The <span class="cy">Pipeline</span> is Building</div></div>
+    <div class="g3">
+      <div class="card" style="border-top:3px solid var(--c1);"><div style="font-family:var(--fm);font-size:10px;color:var(--c1);margin-bottom:8px;font-weight:600;">NEXT TO LAUNCH</div><div style="font-weight:700;font-size:14.5px;margin-bottom:7px;color:var(--t1);">CFO AI Edge Suite</div><div style="font-size:12.5px;color:var(--t2);">Finance Command Center + Autonomous Close Agent + Cash Flow Predictor — target Q2 commercial launch.</div></div>
+      <div class="card" style="border-top:3px solid var(--c5);"><div style="font-family:var(--fm);font-size:10px;color:var(--c5);margin-bottom:8px;font-weight:600;">IN BUILD · Q3 TARGET</div><div style="font-weight:700;font-size:14.5px;margin-bottom:7px;color:var(--t1);">Supply Chain Risk Platform</div><div style="font-size:12.5px;color:var(--t2);">Demand Sensing + Supplier Intelligence + Logistics Optimization — full SCM intelligence stack.</div></div>
+      <div class="card" style="border-top:3px solid var(--c2);"><div style="font-family:var(--fm);font-size:10px;color:var(--c2);margin-bottom:8px;font-weight:600;">CONCEPT · Q4 TARGET</div><div style="font-weight:700;font-size:14.5px;margin-bottom:7px;color:var(--t1);">CHRO Talent Intelligence Suite</div><div style="font-size:12.5px;color:var(--t2);">Attrition Prediction + Skills Mapping + Talent Acquisition Agent — HR AI platform for sticky recurring revenue.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-wrap" id="modal" onclick="this.classList.remove('on')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-x" onclick="document.getElementById('modal').classList.remove('on')">✕</button>
+    <div class="modal-badge">🔒 IN DEVELOPMENT</div>
+    <div class="modal-ico">🤖</div>
+    <div class="modal-t" id="modal-title">Agent Name</div>
+    <div class="modal-d" id="modal-desc">Description here.</div>
+    <div style="margin-top:18px;padding:12px 16px;background:var(--bg2);border-radius:8px;border:1px solid var(--bd);font-size:12px;color:var(--t3);line-height:1.65;">Built on SAP BTP, deployed on Databricks Lakehouse with Azure OpenAI as the reasoning engine. Part of the SAP &amp; AI&D Innovation Hub AI Edge Factory.</div>
+    <button class="btn-p" style="margin-top:16px;width:100%;" onclick="document.getElementById('modal').classList.remove('on')">Close</button>
+  </div>
+</div>
+
+<script>
+const pages=['home','ambition','discovery','playbooks','opmodel','catalogue','success'];
+function showPage(id){
+  pages.forEach(p=>{const el=document.getElementById(p);if(el)el.classList.toggle('on',p===id);});
+  document.querySelectorAll('.nl:not(.cta)').forEach((nl,i)=>{nl.classList.toggle('on',pages[i]===id);});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.nl:not(.cta)').forEach((nl,i)=>{nl.onclick=()=>showPage(pages[i]||'home');});
+function showCXO(id){
+  document.querySelectorAll('.cpanel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.ct').forEach(t=>t.classList.remove('on'));
+  const panel=document.getElementById('cxo-'+id);
+  if(panel)panel.classList.add('on');
+  const ids=['cfo','cae','cro','cmo','scm','chro'];
+  const idx=ids.indexOf(id);
+  const tabs=document.querySelectorAll('.ct');
+  if(tabs[idx])tabs[idx].classList.add('on');
+}
+function showModal(title,desc){
+  document.getElementById('modal-title').textContent=title;
+  document.getElementById('modal-desc').textContent=desc;
+  document.getElementById('modal').classList.add('on');
+}
+function animateCounters(){
+  document.querySelectorAll('.si-n').forEach(el=>{
+    const text=el.textContent;
+    const num=parseFloat(text.replace(/[^0-9.]/g,''));
+    const prefix=text.match(/^[^0-9]*/)[0];
+    const suffix=text.match(/[^0-9.]*$/)[0];
+    if(!isNaN(num)){
+      let startTime=null;const dur=1600;
+      function step(ts){if(!startTime)startTime=ts;const p=Math.min((ts-startTime)/dur,1);const e=1-Math.pow(1-p,3);el.textContent=prefix+(num%1===0?Math.floor(e*num):(e*num).toFixed(1))+suffix;if(p<1)requestAnimationFrame(step);}
+      requestAnimationFrame(step);
+    }
+  });
+}
+setTimeout(animateCounters,500);
+</script>
+</body>
+</html>
